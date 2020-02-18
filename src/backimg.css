@@ -1,0 +1,41 @@
+.bg {
+  background-image: url("../src/img/7.JPG");
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  }
+.bg2 {
+     background-image:linear-gradient(rgba(0,0,0,0.3),
+     rgba(0,0,0,0.3)), url("../src/img/7.JPG"); 
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    }
+.bg3 {
+      background-image: url("../src/img/3.JPG"); 
+     height: 100vh;
+     background-position: center;
+     background-repeat: no-repeat;
+     background-size: cover;
+     }
+  @media only screen and (max-width:1024px){
+    .bg{
+      width:200vw;
+    }
+    .bg2{
+      width:200vw;
+    }
+    .bg3{
+      width:200vw;
+    }
+    .full_bg{
+      width:200vw;
+    }
+  }
+  .full_bg{
+    background: rgb(120,23,198);
+    background: linear-gradient(321deg, rgba(120,23,198,1) 29%, rgba(2,0,36,1) 100%);
+    
+  }
