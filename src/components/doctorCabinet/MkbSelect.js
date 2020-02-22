@@ -35,14 +35,18 @@ const MkbSelect = props => {
 
     return (
         <FormControl fullWidth className={classes.marginTop}>
-            {/* <InputLabel id="select-label">Предварительный диагноз</InputLabel>*/}
             <Autocomplete
                 id="combo-box-demo"
                 options={mkbList}
-                getOptionLabel={option => option.title}
-                style={{ width: 300 }}
+                getOptionLabel={option => option.name}
                 renderInput={params => (
                 <TextField {...params} label="Combo box" variant="outlined" fullWidth />
+                )}
+                renderOption={option=>(
+                    <React.Fragment>
+                    <span>{option.code} </span>
+                    {option.name}
+                    </React.Fragment>
                 )}
             /> 
             {/* <Select

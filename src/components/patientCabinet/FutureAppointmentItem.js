@@ -148,7 +148,7 @@ const FutureAppointmentItem = props => {
                 </Grid>
         <Grid item xs={6}>
         <Grid container justify="center" alignItems="center" spacing={2}>
-          <Grid item xs={4}>
+          {/* <Grid item xs={4}>
           <Fab variant="extended" onClick={openModal} className={classes.fabEdit}>
             <EditIcon  className={classes.IconSize}/>
             Добавить
@@ -157,8 +157,8 @@ const FutureAppointmentItem = props => {
             <EditIcon />
             Добавить
           </Fab>
-          </Grid>
-          <Grid item xs={4} >
+          </Grid>*/}
+          <Grid item xs={4} > 
           <Fab variant="extended" className={classes.fabDelete} onClick={cancelAppointment}>
             <DeleteIcon className={classes.IconEditSize}/>
             Отменить

@@ -10,6 +10,8 @@ import { AlertContext } from './context/AlertContext'
 import DoctorCabinet from "./components/doctorCabinet/DoctorCabinet";
 import DateFnsUtils from "@date-io/date-fns";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import MomentUtils from '@date-io/moment';
+import LuxonUtils from '@date-io/luxon';
 
 const App = props => {
   const [alertOpen, setAlertOpen] = useState(false)

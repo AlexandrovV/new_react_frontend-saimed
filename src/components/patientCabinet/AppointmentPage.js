@@ -57,9 +57,9 @@ const AppointmentPage = props => {
                     <Typography className={classes.subheading}>Выберите дату:</Typography>
                     <DatePicker value={selectedDate} 
                         autoOk
+                        variant="static"
                         disablePast
                         orientation="landscape"
-                        variant="static"
                         openTo="date"
                         onChange={handleDateChange}
                     />
