@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react'
 import Navbar from './Navbar'
+import { useEffect } from "react";
 import HeadingSection from './HeadingSection'
 import ServicesSection from './ServicesSection'
 import OnlineAppointmentsSection from './OnlineAppointmentsSection'
@@ -9,9 +10,12 @@ import CopyrightSection from './CopyrightSection'
 import LoginModal from './LoginModal'
 import '../../backimg.css'
 import RegisterModal from './RegisterModal'
+import InstagramApiService from '../../service/InstagramApiService'
+import InstagramSection from './InstagramSection';
 
 
 const Landing = props => {  
+
     const [loginModalOpen, setLoginModalOpen] = useState(false)
     const [registerModalOpen, setRegisterModalOpen] = useState(false)
     
@@ -19,9 +23,8 @@ const Landing = props => {
     const closeLoginModal = () => setLoginModalOpen(false)
     const openRegisterModal = () => setRegisterModalOpen(true)
     const closeRegisterModal = () => setRegisterModalOpen(false)
-
+ 
     return (
-        
         <Fragment >
             <Navbar openLoginModal={openLoginModal}/>
             <HeadingSection openLoginModal={openLoginModal}/>
@@ -29,6 +32,7 @@ const Landing = props => {
                 <ServicesSection /> 
                 <OnlineAppointmentsSection />
                 <TeamSection />
+                <InstagramSection/>
                 <ContactsSection />
                 <CopyrightSection /> 
             </div>

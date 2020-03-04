@@ -1,85 +1,152 @@
 import React from 'react'
+import { useEffect } from "react";
 import { makeStyles, createStyles } from '@material-ui/styles'
 import { Button } from '@material-ui/core'
 import { Container, Typography, Grid } from '@material-ui/core'
+import InstagramApiService from '../../service/InstagramApiService'
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import IconButton from '@material-ui/core/IconButton';
+import InfoIcon from '@material-ui/icons/Info';
+import '../../backimg.css'
 
-const useStyles = makeStyles(theme => createStyles({
-    section: {
-        color:"white",
-        padding: '100px 0',
-        textAlign: 'center',
-        [theme.breakpoints.down('md')]:{
-            paddingTop:"100px",
-            width:"200vw",
-        }, 
-        opacity:0.9
-    },
-    sectionHeading: {
-        textTransform: 'uppercase',
-        fontSize: '40px',
-        fontWeight: '700',
-        marginTop: '0',
-        marginBottom: '15px',
-        fontFamily: "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
-        [theme.breakpoints.up('sm')]:{
-            fontSize: '4.5vw',
+import StarBorderIcon from '@material-ui/icons/StarBorder';
+const useStyles = makeStyles(theme => ({
+//   root: {
+//     display: 'flex',
+//     flexWrap: 'wrap',
+//     justifyContent: 'space-around',
+//     backgroundColor: theme.palette.background.paper,
+//   },
+//   gridList: {
+//     flexWrap: 'nowrap',
+//     transform: 'translateZ(0)',
+//   },
+//   sectionHeading: {
+//     textAlign: 'center',
+//         textTransform: 'uppercase',
+//         fontSize: '40px',
+//         fontWeight: '700',
+//         marginTop: '0',
+//         marginBottom: '15px',
+//         fontFamily: "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
+//         [theme.breakpoints.up('sm')]:{
+//             fontSize: '4.5vw',
+//         },
+//         [theme.breakpoints.up('lg')]:{
+//             fontSize: '2.5vw',
+//         },
+//     },
+textCenter: {
+    textAlign: 'center'
+},
+  title: {
+    color: 'white',
+    fontSize:"5vh"
+  },
+  titleBar: {
+    background:
+      'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+  },
+root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    // overflow: 'hidden',
+    backgroundColor: theme.palette.background.paper,
+  },
+  gridList: {
+    flexWrap: 'nowrap',
+  },
+  sectionHeading: {
+            textTransform: 'uppercase',
+            fontSize: '40px',
+            fontWeight: '700',
+            marginTop: '0',
+            marginBottom: '15px',
+            fontFamily: "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
+            [theme.breakpoints.up('sm')]:{
+                fontSize: '4.5vw',
+            },
+            [theme.breakpoints.up('lg')]:{
+                fontSize: '2.5vw',
+            },
         },
-        [theme.breakpoints.up('lg')]:{
-            fontSize: '2.5vw',
-        },
-    },
-    sectionSubheading: {
-        fontSize: '16px',
-        fontWeight: '400',
-        fontStyle: 'italic',
-        marginBottom: '65px',
-        textTransform: 'none',
-        fontFamily: "'Droid Serif', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
-        [theme.breakpoints.between('sm','md')]:{
-            marginBottom:"1vw"
-        },
-        [theme.breakpoints.up('sm')]:{
-         fontSize:"4.2vw"
-        },
-        [theme.breakpoints.up('lg')]:{
-            fontSize:"1.2vw"
-           }
-    },
-    button: {
-        fontFamily: "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
-        fontWeight: '700',
-        fontSize: '18px',
-        padding: '20px 40px',
-        [theme.breakpoints.up('sm')]:{
-            fontSize:"4.2vw"
-           },
-           [theme.breakpoints.up('lg')]:{
-               fontSize:"1.2vw"
-           },
-           background:" rgb(12,212,224)",
-           background: "linear-gradient(304deg, rgba(12,212,224,1) 0%, rgba(22,138,203,1) 39%)",
-    }
-}))
-
+  icon: {
+    color: 'rgba(255, 255, 255, 0.54)',
+  },
+}));
 const InstagramSection = props => {
     const classes = useStyles()
-
+    const[tileData,settileData] = React.useState([])
+    const fetchData = async () => {
+        try {
+            const posts = await InstagramApiService.GetPosts()
+            settileData(posts)
+        } catch (err) {
+            console.error(err)
+        }
+    }
+    useEffect(() => {
+        window.addEventListener("load", () => {
+            fetchData()
+        });
+      });
     return (
-        <Container id="appointments" className={classes.section}>
-            <Grid container alignItems="center" justify="center">
-                <Grid item xs={12}>
-            <Typography variant="h2" className={classes.sectionHeading}>
-                Онлайн запись
-            </Typography>
-            <Typography variant="h3" className={classes.sectionSubheading}>
-                Вы можете записаться на приём онлайн прямо сейчас.
-            </Typography> 
-            <Button className={classes.button} variant="contained" color="primary">
-                Записаться онлайн
-            </Button>
-            </Grid>
-            </Grid>
-        </Container>
+    // <div className={classes.root}>
+    // <Typography variant="h2" className={classes.sectionHeading}>НАШ БЛОГ</Typography>
+    //   <GridList className={classes.gridList} cellHeight={450} cols={2.5}>
+    //     {
+    //     tileData.map(tile => (
+    //       <GridListTile key={tile.img_url}>
+    //         <img src={tile.img_url}  alt={tile.caption} />
+    //          <GridListTileBar
+    //           title={tile.caption}
+    //           classes={{
+    //             root: classes.titleBar,
+    //             title: classes.title,
+    //           }}
+    //           actionIcon={
+    //             <IconButton aria-label={`star ${tile.caption}`}>
+    //               <StarBorderIcon className={classes.title} />
+    //             </IconButton>
+    //           }
+    //         />
+    //       </GridListTile>
+    //         ))}
+    //   </GridList>
+    // </div>
+<div className={classes.root}>
+<Grid container spacing={6} justify="center" className={classes.textCenter}>
+      <Grid item xs={12}>
+        <Typography variant="h2" className={classes.sectionHeading}>ПОДПИСЫВАЙТЕСЬ НА НАШ БЛОГ</Typography>
+      </Grid>
+      <Grid item xs={12}>
+      <GridList cellHeight={400} cols={3} className={classes.gridList}>
+        {tileData.map(tile => (
+          <GridListTile key={tile.img_url}>
+            <img src={tile.img_url} alt={tile.caption} />
+            <GridListTileBar
+              title={tile.title}
+              subtitle={<span> {tile.caption}</span>}
+              classes={{
+                root: classes.titleBar,
+                title: classes.title,
+               }}
+              actionIcon={
+                <IconButton aria-label={`info about ${tile.caption}`} className={classes.icon}>
+                  <InfoIcon />
+                </IconButton>
+              }
+            />
+          </GridListTile>
+        ))}
+      </GridList>
+      </Grid>
+      </Grid>
+    </div>
     )
 }
 

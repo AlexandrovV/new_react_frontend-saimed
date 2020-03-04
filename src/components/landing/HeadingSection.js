@@ -36,6 +36,7 @@ const useStyles = makeStyles(theme => createStyles({
           backgroundColor: "white",
           color: deepPurple[300]
         },
+        paddingBottom:"10px"
     },
       img: {
         height: "80vh",
@@ -141,32 +142,10 @@ const HeadingSection = props => {
              </Grid>
           </CardMedia>
        </div>
-      /* <Grid container xs={12}>
-       <Grid item xs={6}>
-      <Paper className={classes.header}>
-        <Typography>{tutorialSteps[activeStep].label}</Typography>
-      </Paper>
-      </Grid>
-      </Grid> */
-      /* <MobileStepper
-        steps={maxSteps}
-        position="static"
-        variant="text"
-        activeStep={activeStep}
-        nextButton={
-          <Button size="small" onClick={handleNext} disabled={activeStep === maxSteps - 1}>
-            Next
-            {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
-          </Button>
-        }
-        backButton={
-          <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-            {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-            Back
-          </Button>
-        }
-      /> */
+     
     )
 }
 
 export default HeadingSection
+
+//IGQVJVYXY5d1pGb1FENkI2SUhWdHdJZAm4xMUhMZA0FaT3p6RTBqSTU4TlJHR180R0J6bEtPYXdxbmtNNjFYS1M3ejVUVzhKd1RvUTdwUXdST2dDZAy1xY1hOcU9vYlFVUjdpSkRDcWJR

@@ -18,97 +18,61 @@ const useStyles = makeStyles(theme => ({
     appointmentContainer: {
         paddingTop: '15px',
         paddingBottom:'15px',
+        paddingLeft:'15px',
         marginBottom: '10px'
     },
     fabDelete:{
-        backgroundColor:red[900],
-        width:'100%',
-        height:"5vh",
-        fontSize:"1.2vw",
-        color:"white",
-        '&:hover':{
-          backgroundColor:"white",
-          color:red[500]
-        },
-        [theme.breakpoints.down('xs')]: {
-          display:'none',
-        }
+      backgroundColor:red[900],
+      width:'100%',
+      height:"5vh",
+      fontSize:"1.3vw",
+      color:"white",
+      '&:hover':{
+        backgroundColor:"white",
+        color:red[500]
       },
-      IconEditSize:{
-        width:"3vh",
-        height:"5vh",
+      [theme.breakpoints.up('xl')]:{
+        height:"3vh",
+        fontSize:"1vw"
       },
-      IconSize:{
-        width:"3vh",
-        height:"5vh",
-      },
-      fabDelIcon:{
-        backgroundColor:red[900],
-        color:"white",
+      [theme.breakpoints.down('xs')]: {
         display:'none',
-       '&:hover':{
-          backgroundColor:"white",
-          color:red[500]
-        },
-        [theme.breakpoints.down('xs')]: {
-          display:'inline',
-          fontSize:'1.4vw'
-        },
       },
-      fabEdit:{
-        backgroundColor:"#3897ba",
-        color:"white",
-        height:"5vh",
-        fontSize:"1.5vw",
-        width:'100%',
-        '&:hover':{
-          backgroundColor:"white",
-          color:"#3897ba"
-        },
-        [theme.breakpoints.down('xs')]: {
-          display:'none',
-        }
-      },
-      fabEdIcon:{
-        backgroundColor:"#3897ba",
-        display:'none',
-        color:'white',
-        '&:hover':{
-          backgroundColor:"white",
-          color:"#3897ba"
-        },
-        [theme.breakpoints.down('xs')]: {
-          display:'inline',
-          fontSize:'1.2vw'
-        },
-      },
-    fabDescription:{
-    backgroundColor:"#1c8045",
-    color:"white",
-    height:"5vh",
-    fontSize:"1.5vw",
-    width:'100%',
-    '&:hover':{
-      backgroundColor:"white",
-      color:"#1c8045"
+      
     },
-    [theme.breakpoints.down('xs')]: {
+    IconEditSize:{
+      width:"3vh",
+      height:"5vh",
+      [theme.breakpoints.up('xl')]:{
+        height:"2vh",
+        fontSize:"1vw"
+      },
+    },
+    font_for_typography:{
+      fontSize:"1.3vw",
+      [theme.breakpoints.between('xs','sm')]:{
+        fontSize:"1.8vw",
+      },
+      [theme.breakpoints.down('xs')]: {
+        fontSize:"2vh",
+      },
+    },
+    fabDelIcon:{
+      backgroundColor:red[900],
+      color:"white",
       display:'none',
-    }
-  },
-  fabDescIcon:{
-    display:'none',
-    backgroundColor:"#1c8045",
-    color:"white",
-    '&:hover':{
-      backgroundColor:"white",
-      color:"#1c8045"
+     '&:hover':{
+        backgroundColor:"white",
+        color:red[500]
+      },
+      [theme.breakpoints.down('xs')]: {
+        display:'inline',
+        fontSize:'1.8vw',
+        
+      },
     },
-    [theme.breakpoints.down('xs')]: {
-      display:'inline',
-      fontSize:'1vw'
-    },
-  },
+      
+    
 }))
 
 const FutureAppointmentItem = props => {
@@ -138,27 +102,16 @@ const FutureAppointmentItem = props => {
     }
     return (
     <Card  className={classes.appointmentContainer}>
-    <Grid container spacing={3} 
-            justify="center"
+    <Grid container spacing={3}
+            justify="space-between"
             alignItems="center"> 
-                <Grid item xs={6}>
-                    <Typography variant="h6">
+                <Grid item xs={6} md={6} xl={6}>
+                    <Typography variant="h6" className={classes.font_for_typography}>
                        {dateFormat(date, 'dddd dd mmmm')}, {dateFormat(startTime, 'HH:MM')} - {dateFormat(endTime, 'HH:MM')} 
                     </Typography>
                 </Grid>
-        <Grid item xs={6}>
-        <Grid container justify="center" alignItems="center" spacing={2}>
-          {/* <Grid item xs={4}>
-          <Fab variant="extended" onClick={openModal} className={classes.fabEdit}>
-            <EditIcon  className={classes.IconSize}/>
-            Добавить
-          </Fab>
-          <Fab className={classes.fabEdIcon}>
-            <EditIcon />
-            Добавить
-          </Fab>
-          </Grid>*/}
-          <Grid item xs={4} > 
+
+          <Grid item xs={4} md={2} xl={3}> 
           <Fab variant="extended" className={classes.fabDelete} onClick={cancelAppointment}>
             <DeleteIcon className={classes.IconEditSize}/>
             Отменить
@@ -168,8 +121,6 @@ const FutureAppointmentItem = props => {
             Отменить
           </Fab>
           </Grid>
-        </Grid>
-        </Grid>
             </Grid>
             <IsNewUserModal open={IsNewUserModalOpen} onClose={CloseModal} openRegisterModal={openRegisterModal}/>
             <RegisterModal open={registerModalOpen} onClose={closeRegisterModal}/>

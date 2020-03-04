@@ -63,7 +63,6 @@ const useStyles = makeStyles(theme => createStyles({
 
 const OnlineAppointmentsSection = props => {
     const classes = useStyles()
-
     return (
         <Container id="appointments" className={classes.section}>
             <Grid container alignItems="center" justify="center">
