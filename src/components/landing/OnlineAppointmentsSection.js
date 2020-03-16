@@ -56,13 +56,16 @@ const useStyles = makeStyles(theme => createStyles({
            [theme.breakpoints.up('lg')]:{
                fontSize:"1.2vw"
            },
-           background:" rgb(12,212,224)",
-           background: "linear-gradient(304deg, rgba(12,212,224,1) 0%, rgba(22,138,203,1) 39%)",
+        background:" rgb(12,212,224)",
+        background: "linear-gradient(304deg, rgba(12,212,224,1) 0%, rgba(22,138,203,1) 39%)",
     }
 }))
 
 const OnlineAppointmentsSection = props => {
     const classes = useStyles()
+
+    const { openLoginModal } = props
+
     return (
         <Container id="appointments" className={classes.section}>
             <Grid container alignItems="center" justify="center">
@@ -73,7 +76,7 @@ const OnlineAppointmentsSection = props => {
             <Typography variant="h3" className={classes.sectionSubheading}>
                 Вы можете записаться на приём онлайн прямо сейчас.
             </Typography> 
-            <Button className={classes.button} variant="contained" color="primary">
+            <Button className={classes.button} onClick={openLoginModal} variant="contained" color="primary">
                 Записаться онлайн
             </Button>
             </Grid>

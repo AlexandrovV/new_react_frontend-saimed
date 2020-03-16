@@ -30,7 +30,7 @@ const Landing = props => {
             <HeadingSection openLoginModal={openLoginModal}/>
             <div className="full_bg">
                 <ServicesSection /> 
-                <OnlineAppointmentsSection />
+                <OnlineAppointmentsSection openLoginModal={openLoginModal}/>
                 <TeamSection />
                 <InstagramSection/>
                 <ContactsSection />

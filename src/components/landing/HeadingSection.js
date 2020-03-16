@@ -36,7 +36,6 @@ const useStyles = makeStyles(theme => createStyles({
           backgroundColor: "white",
           color: deepPurple[300]
         },
-        paddingBottom:"10px"
     },
       img: {
         height: "80vh",
@@ -48,15 +47,11 @@ const useStyles = makeStyles(theme => createStyles({
         textAlign:"center",
         flexGrow:"1",
     },
-    textback1:{
-      color: "white",
-      backgroundColor:cyan[500],
-      opacity:0.9
-    },
     textback:{
       backgroundColor:deepPurple[300],
       color: "white",
-      opacity:0.9
+      opacity:0.9,
+      paddingBottom:"2vh"
     },
     introLeadIn: {
         fontSize: '4vw',
@@ -148,4 +143,3 @@ const HeadingSection = props => {
 
 export default HeadingSection
 
-//IGQVJVYXY5d1pGb1FENkI2SUhWdHdJZAm4xMUhMZA0FaT3p6RTBqSTU4TlJHR180R0J6bEtPYXdxbmtNNjFYS1M3ejVUVzhKd1RvUTdwUXdST2dDZAy1xY1hOcU9vYlFVUjdpSkRDcWJR
