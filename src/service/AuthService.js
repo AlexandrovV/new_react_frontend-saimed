@@ -26,12 +26,12 @@ export default class AuthService {
         })
     }
 
-    static async register(email, password) {
+    static async register(email, password,passwordConfirm,fullName,phoneNumber,birthDate) {
         return new Promise(async (resolve, reject) => {
             try {
                 const response = await fetch(REGISTER_URL, {
                     method: 'post', 
-                    body: JSON.stringify({ email, password }),
+                    body: JSON.stringify({ email, password,passwordConfirm,fullName,phoneNumber,birthDate }),
                     headers: {
                         'Content-Type': 'application/json'
                     }
