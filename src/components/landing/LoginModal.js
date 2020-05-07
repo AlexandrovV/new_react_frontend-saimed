@@ -26,8 +26,9 @@ const LoginModal = props => {
 
     const { open, onClose, openRegisterModal } = props
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e) => {
         try {
+            e.preventDefault();
             const token = await AuthService.login(email, password)
             localStorage.setItem('token', token)
             history.push('/cabinet')
@@ -44,7 +45,7 @@ const LoginModal = props => {
     return (
         <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title" className={classes.dialogTitle}>Войти в кабинет</DialogTitle>
-            <form>
+            <form onSubmit={handleSubmit}>
             <DialogContent>
                 <TextField
                     margin="dense"
@@ -66,7 +67,7 @@ const LoginModal = props => {
             <Button onClick={openRegistration} color="primary">
                 Зарегистрироваться
             </Button>
-            <Button onClick={handleSubmit} type="submit" color="primary">
+            <Button  type="submit" color="primary">
                 Войти
             </Button>
          </DialogActions>

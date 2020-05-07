@@ -34,9 +34,9 @@ const RegisterModal = props => {
 
     const classes = useStyles()
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e) => {
         try {
-            console.log(birthDate)
+            e.preventDefault();
             const token = await AuthService.register(email, password,passwordConfirm,fullName,phoneNumber,birthDate)
             localStorage.setItem('token', token)
             history.push('/cabinet')
@@ -49,7 +49,7 @@ const RegisterModal = props => {
     return (
         <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title" className={classes.dialogTitle}>Регистрация</DialogTitle>
-            <form>
+            <form onSubmit={handleSubmit}>
             <DialogContent>
                 <TextField
                     margin="dense"
@@ -102,7 +102,7 @@ const RegisterModal = props => {
             <Button onClick={onClose} color="primary">
                 Отмена
             </Button>
-            <Button onClick={handleSubmit} type="submit" color="primary">
+            <Button  type="submit" color="primary">
                 Зарегистрироваться
             </Button>
          </DialogActions>
