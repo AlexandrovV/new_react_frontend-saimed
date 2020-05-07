@@ -7,6 +7,7 @@ const CANCEL_APPOINTMENT_URL = SERVER_URL + '/api/doctor/cancelAppointment'
 const APPOINTMENT_DETAILS_URL = SERVER_URL + '/api/doctor/appointmentDetails'
 const ADD_MEDICAL_REPORT_URL = SERVER_URL + '/api/doctor/addMedicalReport'
 const GET_MEDICAL_REPORT_URL = SERVER_URL + '/api/doctor/getMedicalReport'
+const DOWNLOAD_MEDICAL_REPORT_URL = SERVER_URL + '/api/patient/downloadMedicalReport/'
 const GET_MKB_URL = SERVER_URL + '/api/doctor/mkb'
 
 export default class DoctorService {
@@ -107,6 +108,46 @@ export default class DoctorService {
                 reject(err.message)
             }
         })
+    }
+
+    static async downloadMedicalReport(appointmentId) {
+        window.open(DOWNLOAD_MEDICAL_REPORT_URL + appointmentId)
+        // return new Promise(async (resolve, reject) => {
+        //     const token = localStorage.getItem('token')
+        //     try {
+        //         const response = await fetch(DOWNLOAD_MEDICAL_REPORT_URL + appointmentId, {
+        //             method: 'get',
+        //             headers: {
+        //                 'Authorization': 'Bearer ' + token
+        //             }
+        //         })
+        //         console.log(response)
+        //         const bytes = await response.arrayBuffer()
+        //         console.log(bytes)
+        //         const blob = new Blob([bytes], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' })
+        //         console.log(blob)
+        //         const url = URL.createObjectURL(blob)
+        //         console.log(url)
+        //         window.open(url)
+
+                
+        //         // const reader = response.body.getReader()
+
+    
+        //         // const response = new Response(stream)
+                
+        //         // console.log(data)
+        //         // const blob = new Blob([data], { type: data.type })
+        //         // console.log(blob)
+        //         // const url = URL.createObjectURL(blob)
+        //         // console.log(url)
+        //         // window.open(url)
+
+        //         resolve()
+        //     } catch (err) {
+        //         reject(err.message)
+        //     }
+        // })
     }
 
     static async cancelAppointment(appointmentId) {

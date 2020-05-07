@@ -172,8 +172,6 @@ const DoctorFutureAppointmentItem = props => {
     })
     const { onSaveMedicalReport, date, startTime, endTime, appointmentId, onCancel, userId, patientName, patientPhoneNumber, patientBirthDate } = props
 
-    console.log(appointmentId)
-
     const cancelAppointment = async () => {
         try {
             await DoctorService.cancelAppointment(appointmentId)

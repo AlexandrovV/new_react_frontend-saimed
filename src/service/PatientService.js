@@ -6,6 +6,7 @@ const GET_APPOINTMENTS_BY_DATE_URL = SERVER_URL + '/api/patient/appointmentsByDa
 const MAKE_APPOINTMENT_URL = SERVER_URL + '/api/patient/makeAppointment'
 const CANCEL_APPOINTMENT_URL = SERVER_URL + '/api/patient/cancelAppointment'
 const GET_MEDICAL_REPORT_URL = SERVER_URL + '/api/patient/getMedicalReport'
+const DOWNLOAD_MEDICAL_REPORT_URL = SERVER_URL + '/api/patient/downloadMedicalReport/'
 
 export default class PatientService {
     static async getMyAppointments() {
@@ -122,5 +123,9 @@ export default class PatientService {
                 reject(err.message)
             }
         })
+    }
+
+    static async downloadMedicalReport(appointmentId) {
+        window.open(DOWNLOAD_MEDICAL_REPORT_URL + appointmentId)
     }
 }

@@ -39,6 +39,14 @@ const MedicalReportModal = props => {
         fetchData()
     }, [])
 
+    const downloadMedicalReport = async () => {
+        try {
+            await PatientService.downloadMedicalReport(appointmentId)
+        } catch (err) {
+            showError(err)
+        }
+    }
+
     return (
         <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title" maxWidth="md" fullWidth>
             <DialogTitle id="form-dialog-title" className={classes.dialogTitle}>Медицинское заключение</DialogTitle>
@@ -59,12 +67,14 @@ const MedicalReportModal = props => {
                 
             </DialogContent>
             <DialogActions>
-                
-            <Button onClick={onClose} variant="outlined" color="primary">
-                Закрыть
-            </Button>
-         </DialogActions>
-     
+
+                <Button onClick={downloadMedicalReport} variant="outlined" color="primary">
+                    Скачать
+                </Button>{' '}
+                <Button onClick={onClose} variant="outlined" color="primary">
+                    Закрыть
+                </Button>
+             </DialogActions>
         </Dialog>
     )
 }

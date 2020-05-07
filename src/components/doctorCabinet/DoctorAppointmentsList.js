@@ -27,10 +27,10 @@ const DoctorAppointmentsList = props => {
         try {
             const data = await DoctorService.todayAppointments()
             setFutureAppointments(
-                data.filter(a => a.status != 'FINISHED')
+                data.filter(a => a.status !== 'FINISHED')
             )
             setPastAppointments(
-                data.filter(a => a.status == 'FINISHED')
+                data.filter(a => a.status === 'FINISHED')
             )
         } catch (err) {
             console.error(err)
@@ -52,7 +52,7 @@ const DoctorAppointmentsList = props => {
                                 date={a.date} 
                                 startTime={a.startTime}
                                 endTime={a.endTime} 
-                                appointmentId={a.appointmentId} 
+                                appointmentId={a.id} 
                                 userId={a.userId}
                                 patientName={a.patientName}
                                 patientPhoneNumber={a.patientPhoneNumber}
@@ -78,7 +78,7 @@ const DoctorAppointmentsList = props => {
                                 date={a.date} 
                                 startTime={a.startTime} 
                                 endTime={a.endTime} 
-                                appointmentId={a.appointmentId} 
+                                appointmentId={a.id} 
                             />
                         </Grid>
                     ) :

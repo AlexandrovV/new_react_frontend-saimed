@@ -21,11 +21,11 @@ const DoctorCabinet = props => {
             <Route exact path='/admin/login'>
                 <DoctorCabinetLoginPage />
             </Route>
-            <AuthRoute exact path='/admin/generateAppointments' redirectUrl='/admin/login' >
+            <AuthRoute exact path='/admin/generateAppointments' role="ROLE_ADMIN" redirectUrl='/admin/login' >
                 <DoctorCabinetAppBar />
                 <GenerateAppointments />
             </AuthRoute>
-            <AuthRoute exact path='/admin' redirectUrl='/admin/login' >
+            <AuthRoute exact path='/admin' role="ROLE_ADMIN" redirectUrl='/admin/login' >
                 <DoctorCabinetAppBar />
                 <DoctorAppointmentsList />
             </AuthRoute>

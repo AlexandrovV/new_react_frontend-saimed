@@ -35,7 +35,7 @@ const MkbSelect = props => {
 
     return (
         <FormControl fullWidth className={classes.marginTop}>
-            <Autocomplete
+            {/* <Autocomplete
                 id="combo-box-demo"
                 options={mkbList}
                 getOptionLabel={option => option.name}
@@ -48,8 +48,8 @@ const MkbSelect = props => {
                     {option.name}
                     </React.Fragment>
                 )}
-            /> 
-            {/* <Select
+            />  */}
+            <Select
                 labelId="select-label"
                 value={selectedDiagnosis}
                 onChange={e => setSelectedDiagnosis(e.target.value)}
@@ -57,7 +57,7 @@ const MkbSelect = props => {
                 {mkbList.map(mkb => 
                     <MenuItem key={mkb.id} value={mkb.id}>({mkb.code}) - {mkb.name}</MenuItem>
                 )}
-            </Select> */}
+            </Select>
         </FormControl>
     )
 }
