@@ -49,6 +49,7 @@ const RegisterModal = props => {
     return (
         <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title" className={classes.dialogTitle}>Регистрация</DialogTitle>
+            <form>
             <DialogContent>
                 <TextField
                     margin="dense"
@@ -96,16 +97,16 @@ const RegisterModal = props => {
                         shrink: true,
                     }}
                 />
-
             </DialogContent>
             <DialogActions>
             <Button onClick={onClose} color="primary">
                 Отмена
             </Button>
-            <Button onClick={handleSubmit} color="primary">
+            <Button onClick={handleSubmit} type="submit" color="primary">
                 Зарегистрироваться
             </Button>
          </DialogActions>
+        </form>
         </Dialog>
     )
 }

@@ -44,6 +44,7 @@ const LoginModal = props => {
     return (
         <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title" className={classes.dialogTitle}>Войти в кабинет</DialogTitle>
+            <form>
             <DialogContent>
                 <TextField
                     margin="dense"
@@ -65,11 +66,11 @@ const LoginModal = props => {
             <Button onClick={openRegistration} color="primary">
                 Зарегистрироваться
             </Button>
-            <Button onClick={handleSubmit} color="primary">
+            <Button onClick={handleSubmit} type="submit" color="primary">
                 Войти
             </Button>
          </DialogActions>
-     
+            </form>
         </Dialog>
     )
 }
