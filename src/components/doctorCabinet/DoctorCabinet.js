@@ -6,6 +6,7 @@ import { Route } from 'react-router-dom'
 import GenerateAppointments from './GenerateAppointments'
 import DoctorCabinetLoginPage from './DoctorCabinetLoginPage'
 import AuthRoute from '../shared/AuthRoute'
+import ResetPasswordPage from "../resetPassword/ResetPasswordPage";
 
 const useStyles = makeStyles(theme => ({
     background: {

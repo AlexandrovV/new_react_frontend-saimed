@@ -102,7 +102,7 @@ const RegisterModal = props => {
             <Button onClick={onClose} color="primary">
                 Отмена
             </Button>
-            <Button  type="submit" color="primary">
+            <Button  type="submit" color="primary" variant="contained">
                 Зарегистрироваться
             </Button>
          </DialogActions>

@@ -3,7 +3,7 @@ import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
-import { TextField, Button, Snackbar } from '@material-ui/core'
+import { TextField, Button, Snackbar, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import AuthService from '../../service/AuthService'
 import { useHistory } from "react-router-dom"
@@ -12,6 +12,15 @@ import { AlertContext } from '../../context/AlertContext'
 const useStyles = makeStyles({
     dialogTitle: {
         textAlign: 'center'
+    },
+    forgotPassword: {
+        color: '#2978A0',
+        textAlign: 'right',
+        cursor: "pointer",
+        size: '10pt',
+        "&:hover": {
+            textDecoration: 'underline',
+        }
     }
 })
 
@@ -24,7 +33,7 @@ const LoginModal = props => {
     
     const classes = useStyles()
 
-    const { open, onClose, openRegisterModal } = props
+    const { open, onClose, openRegisterModal, openForgotPasswordModal } = props
 
     const handleSubmit = async (e) => {
         try {
@@ -41,9 +50,14 @@ const LoginModal = props => {
         onClose()
         openRegisterModal()
     }
+
+    const openForgotPassword = () => {
+        onClose()
+        openForgotPasswordModal()
+    }
     
     return (
-        <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title">
+        <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title" className={classes.dialogTitle}>Войти в кабинет</DialogTitle>
             <form onSubmit={handleSubmit}>
             <DialogContent>
@@ -61,13 +75,13 @@ const LoginModal = props => {
                     fullWidth
                     onChange={e => setPassword(e.target.value)}
                 />
+                <Typography onClick={openForgotPassword} className={classes.forgotPassword}>Забыли пароль?</Typography>
             </DialogContent>
             <DialogActions>
-                
             <Button onClick={openRegistration} color="primary">
                 Зарегистрироваться
             </Button>
-            <Button  type="submit" color="primary">
+            <Button  type="submit" color="primary" variant="contained">
                 Войти
             </Button>
          </DialogActions>

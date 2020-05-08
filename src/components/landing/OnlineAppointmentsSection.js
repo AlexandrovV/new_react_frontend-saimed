@@ -2,6 +2,8 @@ import React from 'react'
 import { makeStyles, createStyles } from '@material-ui/styles'
 import { Button } from '@material-ui/core'
 import { Container, Typography, Grid } from '@material-ui/core'
+import {hasRole} from "../../helpers/hasRole";
+import {useHistory} from "react-router-dom";
 
 const useStyles = makeStyles(theme => createStyles({
     section: {
@@ -63,8 +65,11 @@ const useStyles = makeStyles(theme => createStyles({
 
 const OnlineAppointmentsSection = props => {
     const classes = useStyles()
+    const history = useHistory()
 
     const { openLoginModal } = props
+
+    const goToCabinet = () => history.push('/cabinet')
 
     return (
         <Container id="appointments" className={classes.section}>
@@ -76,7 +81,7 @@ const OnlineAppointmentsSection = props => {
             <Typography variant="h3" className={classes.sectionSubheading}>
                 Вы можете записаться на приём онлайн прямо сейчас.
             </Typography> 
-            <Button className={classes.button} onClick={openLoginModal} variant="contained" color="primary">
+            <Button className={classes.button} onClick={!hasRole("ROLE_USER") ? openLoginModal : goToCabinet} variant="contained" color="primary">
                 Записаться онлайн
             </Button>
             </Grid>

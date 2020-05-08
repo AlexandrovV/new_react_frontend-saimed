@@ -12,6 +12,8 @@ import DateFnsUtils from "@date-io/date-fns";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import MomentUtils from '@date-io/moment';
 import LuxonUtils from '@date-io/luxon';
+import AuthRoute from "./components/shared/AuthRoute";
+import ResetPasswordPage from "./components/resetPassword/ResetPasswordPage";
 
 const App = props => {
   const [alertOpen, setAlertOpen] = useState(false)
@@ -50,6 +52,9 @@ const App = props => {
             </Route>
             <Route path="/MedPage">
               <MedPage />
+            </Route>
+            <Route path='/reset-password'>
+              <ResetPasswordPage />
             </Route>
             <Redirect to="/" />
           </Switch>

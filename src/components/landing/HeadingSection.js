@@ -14,6 +14,8 @@ import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
 import { deepPurple } from '@material-ui/core/colors';
 import { cyan } from '@material-ui/core/colors';
+import {hasRole} from "../../helpers/hasRole";
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => createStyles({
     root: {
@@ -87,8 +89,11 @@ const useStyles = makeStyles(theme => createStyles({
 
 const HeadingSection = props => {
     const classes = useStyles()
+    const history = useHistory()
 
     const { openLoginModal } = props
+
+    const goToCabinet = () => history.push('/cabinet')
 
     const tutorialSteps = [
       {
@@ -97,7 +102,7 @@ const HeadingSection = props => {
         class:'bg',
         imgPath:backgroundImage,
         button:
-        <Button  className={classes.button} onClick={openLoginModal}>
+        <Button  className={classes.button} onClick={!hasRole("ROLE_USER") ? openLoginModal : goToCabinet}>
           Записаться онлайн
         </Button>
         ,
@@ -122,7 +127,7 @@ const HeadingSection = props => {
     };
     
     return (
-          <div className={classes.root}>
+          <div id="page-top" className={classes.root}>
           <CardMedia className={tutorialSteps[activeStep].class} src={tutorialSteps[activeStep].imgPath} alt={tutorialSteps[activeStep].label} >
             <Grid container className={classes.introText} justify={tutorialSteps[activeStep].just} alignItems="center" >
                  <Grid className={tutorialSteps[activeStep].textClass} item xs={6}>

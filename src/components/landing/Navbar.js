@@ -21,6 +21,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import {hasRole} from "../../helpers/hasRole";
 
 const drawerWidth = 240;
 
@@ -240,13 +241,17 @@ const Navbar = props =>{
       <Typography className={classNames(classes.title, scrolledDown ? classes.titleShrinkSize : '')}>
         SAIMED
      </Typography>
-    <Scrollspy items={ ['page-top', 'services', 'appointments', 'team', 'contact'] } currentClassName="is-current" className={classes.scrollSpy} componentTag="div" >
+    <Scrollspy items={ ['services', 'appointments', 'team', 'contact'] } currentClassName="is-current" className={classes.scrollSpy} componentTag="div" >
         <Button className={classes.navButton} href="#services">Услуги</Button>
         <Button className={classes.navButton} href="#appointments">Онлайн запись</Button>
         <Button className={classes.navButton} href="#team">Специалисты</Button>
         <Button className={classes.navButton} href="#contact">Контакты</Button>
-        <Button className={classes.navButton} onClick={openLoginModal}>Вход <FontAwesomeIcon icon={faUserCircle} size="2x" className={classes.userIcon}/></Button>
+
     </Scrollspy>
+      { !hasRole("ROLE_USER") ?
+          <Button className={classes.navButton} onClick={openLoginModal}>Вход <FontAwesomeIcon icon={faUserCircle} size="2x" className={classes.userIcon}/></Button>
+          : <Button className={classes.navButton} href="/cabinet">Кабинет <FontAwesomeIcon icon={faUserCircle} size="2x" className={classes.userIcon}/></Button>
+      }
   </Toolbar>
         </AppBar>
     </div>
