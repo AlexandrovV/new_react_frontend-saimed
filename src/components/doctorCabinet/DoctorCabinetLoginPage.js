@@ -23,8 +23,9 @@ const DoctorCabinetLoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e) => {
         try {
+            e.preventDefault()
             const token = await AuthService.login(email, password)
             localStorage.setItem('token', token)
             history.push('/admin')
@@ -38,36 +39,36 @@ const DoctorCabinetLoginPage = () => {
             <Grid container justify="center" >
                 <Grid item>
                     <Card>
+                        <form onSubmit={handleSubmit}>
                         <CardContent>
                             <Typography gutterBottom variant="h5" component="h2" className={classes.textCenter}>
                                 Вход
                             </Typography>
-                    
-                            <TextField
-                                margin="dense"
-                                label="E-mail"
-                                type="text"
-                                fullWidth
-                                onChange={e => setEmail(e.target.value)}
-                            />
-                            <TextField
-                                margin="dense"
-                                label="Пароль"
-                                type="password"
-                                fullWidth
-                                onChange={e => setPassword(e.target.value)}
-                            />
+                                <TextField
+                                    margin="dense"
+                                    label="E-mail"
+                                    type="text"
+                                    fullWidth
+                                    onChange={e => setEmail(e.target.value)}
+                                />
+                                <TextField
+                                    margin="dense"
+                                    label="Пароль"
+                                    type="password"
+                                    fullWidth
+                                    onChange={e => setPassword(e.target.value)}
+                                />
                         </CardContent>
                         <CardActions>
                             <Grid container justify="flex-end">
                                 <Grid item>
-                                    <Button onClick={handleSubmit} variant="contained" color="primary">
+                                    <Button type="submit" variant="contained" color="primary">
                                         Войти
                                     </Button>
                                 </Grid>
                             </Grid>
                         </CardActions>
-                        
+                        </form>
                     </Card>
                 </Grid>
             </Grid>

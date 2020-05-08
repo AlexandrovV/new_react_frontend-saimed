@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
 import "./App.css";
 import Landing from "./components/landing/Landing";
 import LandingMedic from "./components/landing/LandingMedic";
@@ -51,6 +51,7 @@ const App = props => {
             <Route path="/MedPage">
               <MedPage />
             </Route>
+            <Redirect to="/" />
           </Switch>
         </Router>
       </MuiPickersUtilsProvider>

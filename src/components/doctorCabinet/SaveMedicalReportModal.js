@@ -23,6 +23,7 @@ const SaveMedicalReportModal = props => {
     const classes = useStyles()
     const { showError, showSuccess } = useContext(AlertContext)
 
+    const [complaints, setComplaints] = useState('')
     const [anamnesMorbi, setAnamnesMorbi] = useState('')
     const [recommendations, setRecommendations] = useState('')
     const [selectedDiagnosis, setSelectedDiagnosis] = useState(null)
@@ -34,6 +35,7 @@ const SaveMedicalReportModal = props => {
             await DoctorService.addMedicalReport(
                 {
                     appointmentId,
+                    complaints,
                     anamnesMorbi,
                     recommendations,
                     mkbDiagnosisId: selectedDiagnosis
@@ -54,6 +56,15 @@ const SaveMedicalReportModal = props => {
                 <Typography><b>Ф.И.О:</b> {patientName}</Typography>
                 <Typography><b>Номер телефона:</b> {patientPhoneNumber}</Typography>
                 <Typography><b>Дата рождения:</b> {dateFormat(patientBirthDate, 'dd.mm.yyyy')}</Typography>
+                <TextField
+                    className={classes.marginTop}
+                    value={complaints}
+                    placeholder="Введите жалобы"
+                    label="Жалобы"
+                    onChange={e => setComplaints(e.target.value)}
+                    multiline
+                    fullWidth
+                />
                 <TextField
                     className={classes.marginTop}
                     value={anamnesMorbi}

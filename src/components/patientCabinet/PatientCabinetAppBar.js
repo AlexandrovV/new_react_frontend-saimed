@@ -13,6 +13,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import {getUser} from "../../helpers/getUser";
 
 const drawerWidth = 240;
 
@@ -244,6 +245,7 @@ const PatientCabinetAppBar = props => {
                         <Button className={classes.navButton}>Записаться</Button>
                     </Link>
                     <div className={classes.flexGrow}></div>
+                    {getUser().email}
                     <IconButton
                         edge="end"
                         aria-label="account of current user"

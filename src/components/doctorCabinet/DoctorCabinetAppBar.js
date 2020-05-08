@@ -13,6 +13,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import {getUser} from "../../helpers/getUser";
 
 const drawerWidth = 240;
 
@@ -240,6 +241,7 @@ const DoctorCabinetAppBar = props => {
                         <Button className={classes.navButton}>Генерация записей</Button>
                     </Link>
                     <div className={classes.flexGrow}></div>
+                    {getUser().email}
                     <IconButton
                         edge="end"
                         aria-label="account of current user"

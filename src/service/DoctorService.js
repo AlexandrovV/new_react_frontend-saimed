@@ -65,6 +65,7 @@ export default class DoctorService {
                     method: 'post',
                     body: JSON.stringify({
                         appointmentId: medicalReport.appointmentId,
+                        complaints: medicalReport.complaints,
                         anamnesMorbi: medicalReport.anamnesMorbi,
                         recommendations: medicalReport.recommendations,
                         mkbDiagnosisId: medicalReport.mkbDiagnosisId
