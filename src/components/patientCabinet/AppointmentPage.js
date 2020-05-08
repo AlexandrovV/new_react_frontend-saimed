@@ -50,6 +50,7 @@ const AppointmentPage = props => {
         }
     }
 
+
     return (
         <Container className={classes.container}>
             <Grid container spacing={4} justify="space-around">
@@ -67,19 +68,24 @@ const AppointmentPage = props => {
                 <Grid item xs={12} md={6}>
                     <Typography className={classes.subheading}>Выберите время:</Typography>
                     <List>
+                        <Grid container xs={7}>
                         {
-                            availableAppointments.length > 0 ? availableAppointments.map(a => 
-                                <ListItem key={a.id}>
-                                    <Button 
-                                        variant={selectedTime === a.id ? "contained" : "outlined"} 
-                                        color={selectedTime === a.id ? "primary" : "default"} 
-                                        onClick={e => setSelectedTime(a.id)}>
-                                        {dateFormat(a.startTime, 'HH:MM')} - {dateFormat(a.endTime, 'HH:MM')}
-                                    </Button>
-                                </ListItem>
-                            ) : 
-                            <ListItem>На этот день свободных записей нет</ListItem>
+                                availableAppointments.length > 0 ? availableAppointments.map(a =>
+                                <Grid item xs={6} >
+                                    <ListItem key={a.id}>
+                                        <Button
+                                            variant={selectedTime === a.id ? "contained" : "outlined"}
+                                            color={selectedTime === a.id ? "primary" : "default"}
+                                            onClick={e => setSelectedTime(a.id)}>
+                                            {dateFormat(a.startTime, 'HH:MM')} - {dateFormat(a.endTime, 'HH:MM')}
+                                        </Button>
+                                    </ListItem>
+                                </Grid>
+                                ) :
+                                <ListItem>На этот день свободных записей нет</ListItem>
                         }
+
+                        </Grid>
                     </List>
                 </Grid>
                 <Grid item xs={12} style={{textAlign:'center'}}>

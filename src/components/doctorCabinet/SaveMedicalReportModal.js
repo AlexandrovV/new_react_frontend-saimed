@@ -29,6 +29,8 @@ const SaveMedicalReportModal = props => {
 
     const { open, onClose, onSaveMedicalReport, appointmentId, patientName, patientPhoneNumber, patientBirthDate } = props
 
+
+
     const saveMedicalReport = async () => {
         try {
             await DoctorService.addMedicalReport(
