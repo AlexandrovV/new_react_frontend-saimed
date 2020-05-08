@@ -228,6 +228,16 @@ const DoctorCabinetAppBar = props => {
               </Link>
               </ListItemText>
         </ListItem>
+        <ListItem button>
+            <ListItemIcon>
+                <MailIcon />
+            </ListItemIcon>
+            <ListItemText >
+                <Link to='/admin/mkbManagement' className={classes.navLink}>
+                    <Button onClick={handleDrawerClose} className={classes.navButton}>Управление МКБ</Button>
+                </Link>
+            </ListItemText>
+        </ListItem>
         </List>       
       </Drawer>
         <AppBar className={classes.appbar} position="static">
@@ -239,6 +249,9 @@ const DoctorCabinetAppBar = props => {
                     </Link>
                     <Link to='/admin/generateAppointments' className={classes.navLink}>
                         <Button className={classes.navButton}>Генерация записей</Button>
+                    </Link>
+                    <Link to='/admin/mkbManagement' className={classes.navLink}>
+                        <Button className={classes.navButton}>Управление МКБ</Button>
                     </Link>
                     <div className={classes.flexGrow}></div>
                     {getUser().email}

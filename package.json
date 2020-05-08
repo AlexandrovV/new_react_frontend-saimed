@@ -23,6 +23,7 @@
     "dateformat": "^3.0.3",
     "dayjs": "^1.8.20",
     "luxon": "^1.22.0",
+    "material-table": "^1.57.2",
     "moment": "^2.24.0",
     "query-string": "^6.12.1",
     "react": "^16.12.0",
@@ -31,7 +32,8 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
     "react-scrollspy": "^3.4.2",
-    "react-swipeable-views": "^0.13.9"
+    "react-swipeable-views": "^0.13.9",
+    "sweetalert": "^2.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
