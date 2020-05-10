@@ -57,7 +57,7 @@ const MedicalReportModal = props => {
                         <div>
                             <Typography><b>Ф.И.О:</b> {medicalReport.patientFullName}</Typography>
                             <Typography><b>Номер телефона:</b> {medicalReport.patientPhoneNumber}</Typography>
-                            <Typography><b>Дата рождения:</b> {dateFormat(medicalReport.patientBirthDate, 'dd.mm.yyyy')}</Typography>
+                            {/*<Typography><b>Дата рождения:</b> {dateFormat(medicalReport.patientBirthDate, 'dd.mm.yyyy')}</Typography>*/}
                             <Typography><b>Жалобы:</b> {medicalReport.complaints}</Typography>
                             <Typography><b>Анамнез жизни:</b> {medicalReport.anamnesMorbi}</Typography>
                             <Typography><b>Предварительный диагноз:</b> {medicalReport.mkbDiagnosis}</Typography>

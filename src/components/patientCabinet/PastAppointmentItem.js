@@ -58,9 +58,8 @@ const useStyles = makeStyles(theme => ({
           color: "#1c8045"
         },
         [theme.breakpoints.down("xs")]: {
-          display: "inline",
-            height:"3vh",
-            fontSize:'1.8vw'
+            display: "inline",
+            fontSize:'1.5vw'
         }
       },
 
@@ -80,7 +79,9 @@ const PastAppointmentItem = props => {
         <Card  className={classes.appointmentContainer}>
             <Grid container spacing={3} justify="space-between" alignItems="center"> 
                 <Grid item xs={6} md={6} xl={6}>
-                    <Typography variant="h6" className={classes.font_for_typography}>{dateFormat(date, 'dddd dd mmmm')}, {dateFormat(startTime, 'HH:MM')} - {dateFormat(endTime, 'HH:MM')}</Typography>
+                    <Typography variant="h6" className={classes.font_for_typography}>
+                        {/*{dateFormat(date.replace(' ','T'), 'dddd dd mmmm')}, {dateFormat(startTime.replace(' ','T'), 'HH:MM')} - {dateFormat(endTime.replace(' ','T'), 'HH:MM')}*/}
+                    </Typography>
                 </Grid>
                 <Grid item  xs={4} md={2} xl={3}>
                   <Fab  variant="extended" className={classes.fabDescription} onClick={openMedicalReport}>

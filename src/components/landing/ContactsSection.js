@@ -122,8 +122,8 @@ const ContactsSection = props => {
                 <Grid container spacing={3}>
                     <Grid item xs={5} sm={5} lg={4} xl={6}>
                         <Typography variant="h4" className={classes.sectionHeading}>Контакты</Typography>
-                        <Typography className={classes.addressInfo}>г. Алматы, <br/> ул. Манаса 34/1</Typography>
-                        <Typography className={classes.phoneNumber}>+77877718877</Typography>
+                        <Typography className={classes.addressInfo}>г. Алматы, <br/> ул. Т.Сауранбаева 7\1, каб. 305</Typography>
+                        <Typography className={classes.phoneNumber}>+7 (775) 306-66-07</Typography>
                         <Typography variant="h5" className={classes.socialHeading}>МЫ В СОЦИАЛЬНЫХ СЕТЯХ</Typography>
                         <a className={classes.socialButton}>
                             <FontAwesomeIcon icon={faFacebookF} />

@@ -98,7 +98,7 @@ const AppointmentPage = props => {
                                             variant={selectedTime === a.id ? "contained" : "outlined"}
                                             color={selectedTime === a.id ? "primary" : "default"}
                                             onClick={e => setSelectedTime(a.id)}>
-                                            {dateFormat(a.startTime, 'HH:MM')} - {dateFormat(a.endTime, 'HH:MM')}
+                                            {/*{dateFormat(a.startTime, 'HH:MM')} - {dateFormat(a.endTime, 'HH:MM')}*/}
                                         </Button>
                                     </ListItem>
                                 </Grid>

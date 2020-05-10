@@ -47,6 +47,7 @@ const useStyles = makeStyles(theme => createStyles({
     introText: {
         height:"100vh",
         textAlign:"center",
+        width:"100%",
         flexGrow:"1",
     },
     textback:{

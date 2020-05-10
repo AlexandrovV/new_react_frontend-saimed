@@ -143,17 +143,19 @@ const primaryColor = "#2978A0"
 
 const tutorialSteps = [
     {
-      label: 'Общий осмотр',
+      label: 'Консультативно-диагностическая помощь детскому населению',
+      desc: 'Консультация и осмотр десткого невролога',
       icon:faStethoscope,
     },
     {
-      label: 'Консультация',
+      label: 'Амбулаторная помощь десткому населению',
+      desc: 'Консультация и осмотр педиатра',
       icon:faUserNurse
     },
-    {
-      label: 'Процедуры',
-      icon:faSyringe 
-    },
+    // {
+    //   label: 'Процедуры',
+    //   icon:faSyringe
+    // },
   ];
 
 const ServicesSection = props => {
@@ -208,10 +210,10 @@ const ServicesSection = props => {
     return (
         <div id="services"  className={classes.section}>
             <Container >
-                <Grid container  className={classes.grid} spacing={6}>
+                <Grid container  className={classes.grid} spacing={6} justify="space-around">
                     <Grid item xs={12}>
                         <Typography variant="h2" className={classes.sectionHeading}>Наши услуги</Typography>
-                        <Typography variant="h3" className={classes.sectionSubheading}>Lorem ipsum dolor sit amet consectetur.</Typography>
+                        {/*<Typography variant="h3" className={classes.sectionSubheading}>Lorem ipsum dolor sit amet consectetur.</Typography>*/}
                     </Grid>
                     <Grid item xs={4}>
                     <Grow in={checked}>
@@ -220,11 +222,9 @@ const ServicesSection = props => {
                         <FontAwesomeIcon  icon={faCircle} className={classes.circle} />
                         <FontAwesomeIcon icon={faStethoscope} className={classes.inverseIcons} inverse={true} />
                     </span>
-                        <Typography variant="h2" className={classes.serviceHeading}>Общий осмотр</Typography>
+                        <Typography variant="h2" className={classes.serviceHeading}>Консультативно-диагностическая помощь детскому населению</Typography>
                         <Typography className={classes.subContent}>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
-                            Minima maxime quam architecto quo inventore harum ex magni, 
-                            dicta impedit.
+                            Консультация и осмотр детского невролога
                         </Typography>
                         </div>
                         </Grow>
@@ -238,41 +238,39 @@ const ServicesSection = props => {
                          <FontAwesomeIcon icon={faCircle} className={classes.circle}  />
                          <FontAwesomeIcon icon={faUserNurse} className={classes.inverseIcons} inverse={true}/> 
                     </span>
-                        <Typography variant="h4" className={classes.serviceHeading}>Консультация</Typography>
+                        <Typography variant="h4" className={classes.serviceHeading}>Амбулаторная помощь детскому населению</Typography>
                         <Typography className={classes.subContent}>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
-                            Minima maxime quam architecto quo inventore harum ex magni, 
-                            dicta impedit.
+                            Консультация и осмотр педиатра
                         </Typography>
                         </div>
                         </Grow>
                     </Grid>
                    
-                    <Grid item xs={4}>
-                    <Grow in={checked}>
-                    <div className={transformValue}>
-                    <span className="fa-layers fa-fw fa-4x">
-                        <FontAwesomeIcon icon={faCircle} className={classes.circle} />
-                        <FontAwesomeIcon icon={faSyringe} className={classes.inverseIcons} inverse={true} />
-                    </span>                        
-                    <Typography variant="h4" className={classes.serviceHeading}>Процедуры</Typography>
-                        <Typography className={classes.subContent}>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
-                            Minima maxime quam architecto quo inventore harum ex magni, 
-                            dicta impedit.
-                        </Typography>
-                        </div>
-                        </Grow>
-                    </Grid>
+                    {/*<Grid item xs={4}>*/}
+                    {/*<Grow in={checked}>*/}
+                    {/*<div className={transformValue}>*/}
+                    {/*<span className="fa-layers fa-fw fa-4x">*/}
+                    {/*    <FontAwesomeIcon icon={faCircle} className={classes.circle} />*/}
+                    {/*    <FontAwesomeIcon icon={faSyringe} className={classes.inverseIcons} inverse={true} />*/}
+                    {/*</span>                        */}
+                    {/*<Typography variant="h4" className={classes.serviceHeading}>Процедуры</Typography>*/}
+                    {/*    <Typography className={classes.subContent}>*/}
+                    {/*        Lorem ipsum dolor sit amet, consectetur adipisicing elit. */}
+                    {/*        Minima maxime quam architecto quo inventore harum ex magni, */}
+                    {/*        dicta impedit.*/}
+                    {/*    </Typography>*/}
+                    {/*    </div>*/}
+                    {/*    </Grow>*/}
+                    {/*</Grid>*/}
                 </Grid>
                 <Paper  className={classes.header}>
                 <Typography variant="h2" className={classes.sectionHeading}>
                     Наши услуги
                 </Typography>
 
-                <Typography variant="h3" className={classes.sectionSubheading}>
-                    Lorem ipsum dolor sit amet consectetur.
-                </Typography>
+                {/*<Typography variant="h3" className={classes.sectionSubheading}>*/}
+                {/*    Lorem ipsum dolor sit amet consectetur.*/}
+                {/*</Typography>*/}
                 <Grid container alignItems="center" justify="center" spacing={3}>
                     <Grid item xs={3}>   
                     <Button  onClick={handleBack} disabled={activeStep === 0}>
@@ -291,10 +289,11 @@ const ServicesSection = props => {
                 </Typography>
 
                 <Typography>
-                    Lorem ipsum dolor sit amet, 
-                    consectetur adipisicing elit. 
-                    Minima maxime quam architecto quo 
-                    inventore harum ex magni, dicta impedit.
+                    {/*Lorem ipsum dolor sit amet, */}
+                    {/*consectetur adipisicing elit. */}
+                    {/*Minima maxime quam architecto quo */}
+                    {/*inventore harum ex magni, dicta impedit.*/}
+                    {tutorialSteps[activeStep].desc}
                 </Typography>
                 <Divider />
                 <MobileStepper

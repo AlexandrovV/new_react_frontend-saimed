@@ -101,7 +101,7 @@ const TeamSection = props => {
                 <Grid container spacing={6} justify="center" className={classes.textCenter}>
                     <Grid item xs={12}>
                         <Typography variant="h2" className={classes.sectionHeading}>НАШИ СПЕЦИАЛИСТЫ</Typography>
-                        <Typography variant="h3" className={classes.sectionSubheading}>Lorem ipsum dolor sit amet consectetur.</Typography>
+                        {/*<Typography variant="h3" className={classes.sectionSubheading}>Lorem ipsum dolor sit amet consectetur.</Typography>*/}
                     </Grid>
                     <Grid item md={4} xs={12}>
                         <CardMedia image={doctorImage} className={classes.doctorImage}/>
