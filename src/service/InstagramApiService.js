@@ -1,7 +1,7 @@
 const SERVER_URL = process.env.REACT_APP_SERVER_URL
 const LOGIN_URL = SERVER_URL + '/api/auth/login'
 const REGISTER_URL = SERVER_URL + '/api/auth/register'
-const token = 'IGQVJVOG1zUU1oQUczWG05dXp4dU1yaTJUYTNnQXhZAMGpVVGNySFJqNkhUMXBESVFfWnBrVkdBczZA1NjRFNWRjamJkd05jb3JHX0FaZA1RzdWlyVFFOZAFp6Rnp3VkhWWjRZAaFA0X09wTm90N2dCNXZA6NAZDZD'
+const token = 'IGQVJXZAlI1TU91NlNWMTBRYTZAvd1RhbWxsdzZANYkJmZAzd4YnoxdzBDOUc3OXBIU2dLRUU1anlvaFFUZAnZAaNnVITFlHSkExQjl1WXN5akVSVmQxYUFTcHBMVnZAKc1htNjgwYU52SURua3RHLUN1V2ZADcQZDZD'
 const InstagramIdOfImagePosts_URL = 'https://graph.instagram.com/me/media?fields=id,caption,permalink&access_token='+token
 export default class InstagramApiService {
     static async GetPosts()

@@ -35,7 +35,7 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: "#1c8045",
         color: "white",
         height: "5vh",
-        fontSize: "1.5vw",
+        fontSize: "1.3vw",
         width: "100%",
         "&:hover": {
           backgroundColor: "white",
@@ -45,7 +45,7 @@ const useStyles = makeStyles(theme => ({
           display: "none"
         },
         [theme.breakpoints.up('xl')]:{
-            height:"3vh",
+            height:"4vh",
             fontSize:"1vw"
         },
       },
@@ -59,7 +59,8 @@ const useStyles = makeStyles(theme => ({
         },
         [theme.breakpoints.down("xs")]: {
           display: "inline",
-          fontSize:'1.8vw'
+            height:"3vh",
+            fontSize:'1.8vw'
         }
       },
 
