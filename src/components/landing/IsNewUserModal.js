@@ -3,22 +3,12 @@ import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
-import Grid from "@material-ui/core/Grid";
-import { TextField, Button, Snackbar } from '@material-ui/core'
-import { makeStyles } from '@material-ui/styles'
-import AuthService from '../../service/AuthService'
-import Fab from "@material-ui/core/Fab";
-import { useHistory } from "react-router-dom"
-import Alert from '@material-ui/lab/Alert';
-import { AlertContext } from '../../context/AlertContext'
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import ContactsIcon from '@material-ui/icons/Contacts';
-import InboxIcon from '@material-ui/icons/Inbox';
-import DraftsIcon from '@material-ui/icons/Drafts';
+import {Button, TextField} from '@material-ui/core'
+import {makeStyles} from '@material-ui/styles'
+import {useHistory} from "react-router-dom"
+import {AlertContext} from '../../context/AlertContext'
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import DoctorService from "../../service/DoctorService";
-import dateFormat from "dateformat";
-import PatientService from "../../service/PatientService";
 
 const useStyles = makeStyles({
     dialogTitle: {
@@ -41,18 +31,14 @@ const IsNewUserModal = props => {
     };
     const fetchData = async () => {
         try {
-
             const data = await DoctorService.GetUsers()
-            console.log(data);
             setPastAppointments(data);
         } catch (err) {
-            console.error(err)
+            showError(err)
         }
     }
     const makeAppointment = async () => {
         try {
-            console.log(value.id)
-            console.log(startTime)
             await DoctorService.makeAppointmentByDoctor(startTime,value.id)
             fetchData_Table();
             showSuccess('Пользователь успешно забронирован');
@@ -69,7 +55,7 @@ const IsNewUserModal = props => {
     const classes = useStyles()
     
     return (
-        <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title">
+        <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title" className={classes.dialogTitle}>
                 Выберите пользователя
             </DialogTitle>
@@ -81,7 +67,7 @@ const IsNewUserModal = props => {
                         onChange={(event, newValue) => {
                             setValue(newValue);
                         }}
-                        renderInput={(params) => <TextField style={{ width: '100%' }}  {...params} label="Combo box" variant="outlined" />}
+                        renderInput={(params) => <TextField style={{ width: '100%' }}  {...params} label="Выберите пользователя" variant="outlined" />}
                     />
             </DialogContent>
             <DialogActions>

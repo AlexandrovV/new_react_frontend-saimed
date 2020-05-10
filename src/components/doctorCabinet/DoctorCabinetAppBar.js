@@ -238,6 +238,16 @@ const DoctorCabinetAppBar = props => {
                 </Link>
             </ListItemText>
         </ListItem>
+            <ListItem button>
+                <ListItemIcon>
+                    <MailIcon />
+                </ListItemIcon>
+                <ListItemText >
+                    <Link to='/admin/usersManagement' className={classes.navLink}>
+                        <Button onClick={handleDrawerClose} className={classes.navButton}>Управление Пользователями</Button>
+                    </Link>
+                </ListItemText>
+            </ListItem>
         </List>       
       </Drawer>
         <AppBar className={classes.appbar} position="static">
@@ -252,6 +262,9 @@ const DoctorCabinetAppBar = props => {
                     </Link>
                     <Link to='/admin/mkbManagement' className={classes.navLink}>
                         <Button className={classes.navButton}>Управление МКБ</Button>
+                    </Link>
+                    <Link to='/admin/usersManagement' className={classes.navLink}>
+                        <Button className={classes.navButton}>Управление Пользователями</Button>
                     </Link>
                     <div className={classes.flexGrow}></div>
                     {getUser().email}

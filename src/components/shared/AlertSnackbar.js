@@ -5,9 +5,9 @@ import Alert from '@material-ui/lab/Alert'
 const AlertSnackbar = props => {
     const { open, handleClose, message, severity } = props
 
-    useEffect(() => {
-        console.log(open)
-    }, [])
+    // useEffect(() => {
+    //     console.log(open)
+    // }, [])
 
     return (
         <Snackbar open={open} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>

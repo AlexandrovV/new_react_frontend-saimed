@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { Button, List, ListItem, Grid, Container, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import { DatePicker } from '@material-ui/pickers';
 import PatientService from '../../service/PatientService';
 import dateFormat from 'dateformat'
 import { useHistory } from 'react-router-dom';
+import {AlertContext} from "../../context/AlertContext";
 
 const useStyles = makeStyles({
     subheading: {
@@ -20,6 +21,8 @@ const useStyles = makeStyles({
 })
 
 const AppointmentPage = props => {
+    const { showError, showSuccess } = useContext(AlertContext)
+
     const [selectedDate, handleDateChange] = useState(new Date())
     const [availableAppointments, setAvailableAppointments] = useState([])
     const [selectedTime, setSelectedTime] = useState(null)
@@ -30,9 +33,9 @@ const AppointmentPage = props => {
     const fetchData = async () => {
         try {
             const appointments = await PatientService.getAppointmentsByDate(selectedDate)
-            setAvailableAppointments(appointments.filter(a => a.status == 'FREE'))
+            setAvailableAppointments(appointments.filter(a => a.status === 'FREE'))
         } catch (err) {
-            console.error(err)
+            showError(err)
         }
     }
 
@@ -42,11 +45,11 @@ const AppointmentPage = props => {
 
     const makeAppointment = async () => {
         try {
-            console.log('makeAppointment')
             await PatientService.makeAppointment(selectedTime)
+            showSuccess('Вы усрешно записались на прием!')
             history.push('/cabinet')
         } catch (err) {
-            console.error(err)
+            showError(err)
         }
     }
 

@@ -3,7 +3,7 @@ import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
-import { Button, Typography, TextField } from '@material-ui/core'
+import { Button, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import dateFormat from 'dateformat'
 import DoctorService from '../../service/DoctorService'
@@ -28,6 +28,7 @@ const MedicalReportModal = props => {
 
     const fetchData = async () => {
         try {
+            if (appointmentId === null) return
             const medReport = await DoctorService.getMedicalReport(appointmentId)
             setMedicalReport(medReport)
         } catch (err) {
@@ -37,7 +38,7 @@ const MedicalReportModal = props => {
 
     useEffect(() => {
         fetchData()
-    }, [])
+    }, [props.open])
 
     const downloadMedicalReport = async () => {
         try {

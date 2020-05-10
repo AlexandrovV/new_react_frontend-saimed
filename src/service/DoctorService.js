@@ -13,6 +13,9 @@ const DOWNLOAD_MEDICAL_REPORT_URL = SERVER_URL + '/api/patient/downloadMedicalRe
 const GET_MKB_URL = SERVER_URL + '/api/doctor/mkb'
 const GET_MEDICAL_USERS_URL = SERVER_URL + '/api/doctor/getUsers'
 const MAKE_APPOINTMENT_USER =  SERVER_URL + '/api/doctor/assignPatient'
+const BLOCK_APPOINTMENT =  SERVER_URL + '/api/doctor/blockAppointment'
+const UNBLOCK_APPOINTMENT =  SERVER_URL + '/api/doctor/unblockAppointment'
+
 export default class DoctorService {
     static async generateAppointments(fromDate, toDate) {
         return new Promise(async (resolve, reject) => {
@@ -60,7 +63,7 @@ export default class DoctorService {
         })
     }
 
-    static async getCurrentDayAppointments(date){
+    static async getAppointmentsByDate(date){
         return new Promise(async (resolve, reject) => {
             try {
                 const token = localStorage.getItem('token')
@@ -113,6 +116,9 @@ export default class DoctorService {
                 const response = await fetch(ADD_MEDICAL_REPORT_URL, {
                     method: 'post',
                     body: JSON.stringify({
+                        patientFullName: medicalReport.patientName,
+                        patientPhoneNumber: medicalReport.patientPhoneNumber,
+                        patientBirthDate: medicalReport.patientBirthDate,
                         appointmentId: medicalReport.appointmentId,
                         complaints: medicalReport.complaints,
                         anamnesMorbi: medicalReport.anamnesMorbi,
@@ -228,6 +234,54 @@ export default class DoctorService {
             const token = localStorage.getItem('token')
             try {
                 const response = await fetch(CANCEL_APPOINTMENT_URL, {
+                    method: 'post',
+                    body: JSON.stringify({appointmentId: appointmentId}),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                    }
+                })
+                const data = await response.json()
+                if (data.error != null) {
+                    reject(data.error.message)
+                } else {
+                    resolve(data.data)
+                }
+            } catch (err) {
+                reject(err.message)
+            }
+        })
+    }
+
+    static async blockAppointment(appointmentId) {
+        return new Promise(async (resolve, reject) => {
+            const token = localStorage.getItem('token')
+            try {
+                const response = await fetch(BLOCK_APPOINTMENT, {
+                    method: 'post',
+                    body: JSON.stringify({appointmentId: appointmentId}),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                    }
+                })
+                const data = await response.json()
+                if (data.error != null) {
+                    reject(data.error.message)
+                } else {
+                    resolve(data.data)
+                }
+            } catch (err) {
+                reject(err.message)
+            }
+        })
+    }
+
+    static async unblockAppointment(appointmentId) {
+        return new Promise(async (resolve, reject) => {
+            const token = localStorage.getItem('token')
+            try {
+                const response = await fetch(UNBLOCK_APPOINTMENT, {
                     method: 'post',
                     body: JSON.stringify({appointmentId: appointmentId}),
                     headers: {
