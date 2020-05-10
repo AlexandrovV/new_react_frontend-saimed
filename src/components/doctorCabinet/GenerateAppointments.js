@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { Container, Typography, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
-import { DatePicker } from '@material-ui/pickers'
+import { KeyboardDatePicker } from '@material-ui/pickers'
 import DoctorService from '../../service/DoctorService'
 import { AlertContext } from '../../context/AlertContext'
 
@@ -12,6 +12,9 @@ const useStyles = makeStyles(theme => ({
         marginTop: '20px',
         marginBottom: '10px'
     },
+    datePicker: {
+        marginRight: '10px'
+    }
 }))
 
 const GenerateAppointments = props => {
@@ -33,19 +36,25 @@ const GenerateAppointments = props => {
     return (
         <Container>
             <Typography className={classes.subheading}>Сгенерировать записи</Typography>
-            <DatePicker
+            <KeyboardDatePicker
+                className={classes.datePicker}
                 disablePast
                 label="Дата с"
                 value={fromDate}
                 onChange={setFromDate}
+                format="dd.MM.yyyy"
+                inputVariant="outlined"
                 autoOk
             />
 
-            <DatePicker
+            <KeyboardDatePicker
+                className={classes.datePicker}
                 disablePast
                 label="Дата по"
                 value={toDate}
                 onChange={setToDate}
+                format="dd.MM.yyyy"
+                inputVariant="outlined"
                 autoOk
             />
 

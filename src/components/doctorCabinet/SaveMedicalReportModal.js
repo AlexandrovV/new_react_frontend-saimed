@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
@@ -9,6 +9,7 @@ import dateFormat from 'dateformat'
 import DoctorService from '../../service/DoctorService'
 import { AlertContext } from '../../context/AlertContext'
 import MkbSelect from './MkbSelect'
+import {KeyboardDatePicker} from "@material-ui/pickers";
 
 const useStyles = makeStyles({
     dialogTitle: {
@@ -23,19 +24,24 @@ const SaveMedicalReportModal = props => {
     const classes = useStyles()
     const { showError, showSuccess } = useContext(AlertContext)
 
+    const { open, onClose, onSaveMedicalReport, appointmentId } = props
+
+    const [patientName, setPatientName] = useState('')
+    const [patientPhoneNumber, setPatientPhoneNumber] = useState('')
+    const [patientBirthDate, setPatientBirthDate] = useState(Date())
     const [complaints, setComplaints] = useState('')
     const [anamnesMorbi, setAnamnesMorbi] = useState('')
     const [recommendations, setRecommendations] = useState('')
     const [selectedDiagnosis, setSelectedDiagnosis] = useState(null)
-
-    const { open, onClose, onSaveMedicalReport, appointmentId, patientName, patientPhoneNumber, patientBirthDate } = props
-
 
 
     const saveMedicalReport = async () => {
         try {
             await DoctorService.addMedicalReport(
                 {
+                    patientName,
+                    patientPhoneNumber,
+                    patientBirthDate,
                     appointmentId,
                     complaints,
                     anamnesMorbi,
@@ -50,14 +56,44 @@ const SaveMedicalReportModal = props => {
             showError(err)
         }
     }
+    console.log(props.patientName)
+    useEffect(() => {
+        setPatientName(props.patientName)
+        setPatientPhoneNumber(props.patientPhoneNumber)
+        setPatientBirthDate(props.patientBirthDate)
+    }, [props.patientName])
 
     return (
         <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title" maxWidth="md" fullWidth>
             <DialogTitle id="form-dialog-title" className={classes.dialogTitle}>Медицинское заключение</DialogTitle>
             <DialogContent>
-                <Typography><b>Ф.И.О:</b> {patientName}</Typography>
-                <Typography><b>Номер телефона:</b> {patientPhoneNumber}</Typography>
-                <Typography><b>Дата рождения:</b> {dateFormat(patientBirthDate, 'dd.mm.yyyy')}</Typography>
+                <TextField
+                    className={classes.marginTop}
+                    value={patientName}
+                    placeholder="Введите Ф.И.О. пациента"
+                    label="Ф.И.О. пациента"
+                    onChange={e => setPatientName(e.target.value)}
+                    multiline
+                    fullWidth
+                />
+                <TextField
+                    className={classes.marginTop}
+                    value={patientPhoneNumber}
+                    placeholder="Введите контактный номер пациента"
+                    label="Контактный номер"
+                    onChange={e => setPatientPhoneNumber(e.target.value)}
+                    multiline
+                    fullWidth
+                />
+                <KeyboardDatePicker
+                    className={classes.marginTop}
+                    label="Дата рождения пациента"
+                    value={patientBirthDate}
+                    onChange={setPatientBirthDate}
+                    fullWidth
+                    format="dd.MM.yyyy"
+                    autoOk
+                />
                 <TextField
                     className={classes.marginTop}
                     value={complaints}
@@ -92,8 +128,8 @@ const SaveMedicalReportModal = props => {
             <Button onClick={onClose} variant="outlined" color="primary">
                 Закрыть
             </Button>
-            <Button onClick={saveMedicalReport} variant="outlined" color="primary">
-                Завершить приём
+            <Button onClick={saveMedicalReport} variant="contained" color="primary" >
+                Закрепить медицинское заключение
             </Button>
          </DialogActions>
      

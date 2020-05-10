@@ -9,7 +9,7 @@ import MkbService from "../../../service/MkbService";
 import {AlertContext} from "../../../context/AlertContext";
 import swal from 'sweetalert';
 
-const MkbTableOld = props => {
+const MkbTable = props => {
     const [mkbList, setMkbList] = useState([])
 
     const [createModalOpen, setCreateModalOpen] = useState(false)
@@ -25,8 +25,6 @@ const MkbTableOld = props => {
     const closeUpdateModal = () => setUpdateModalOpen(false)
 
     const { showSuccess, showError } = useContext(AlertContext)
-
-
 
     const fetchData = async () => {
         try {
@@ -96,7 +94,9 @@ const MkbTableOld = props => {
                 ]}
                 options={{
                     actionsColumnIndex: -1,
-                    pageSize: 10
+                    padding: "dense",
+                    pageSizeOptions: [10, 15, 20, 25],
+                    pageSize: 20
                 }}
             />
             <CreateMkbModal open={createModalOpen} onClose={closeCreateModal} onCreate={fetchData}/>
@@ -105,4 +105,4 @@ const MkbTableOld = props => {
     )
 }
 
-export default MkbTableOld
+export default MkbTable
