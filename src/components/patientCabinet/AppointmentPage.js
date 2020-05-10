@@ -46,7 +46,7 @@ const AppointmentPage = props => {
     const makeAppointment = async () => {
         try {
             await PatientService.makeAppointment(selectedTime)
-            showSuccess('Вы усрешно записались на прием!')
+            showSuccess('Вы успешно записались на прием!')
             history.push('/cabinet')
         } catch (err) {
             showError(err)

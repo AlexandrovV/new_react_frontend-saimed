@@ -16,7 +16,10 @@ export default class MkbService {
                     }
                 })
                 const data = await response.json()
-                if (data.error != null) {
+                if (data.error != null && response.status === 401) {
+                    localStorage.removeItem('token')
+                    reject(data.error.message)
+                } else if (data.error != null) {
                     reject(data.error.message)
                 } else {
                     resolve(data.data)
@@ -43,7 +46,10 @@ export default class MkbService {
                     }
                 })
                 const data = await response.json()
-                if (data.error != null) {
+                if (data.error != null && response.status === 401) {
+                    localStorage.removeItem('token')
+                    reject(data.error.message)
+                } else if (data.error != null) {
                     reject(data.error.message)
                 } else {
                     resolve(data.data)
@@ -70,7 +76,10 @@ export default class MkbService {
                     }
                 })
                 const data = await response.json()
-                if (data.error != null) {
+                if (data.error != null && response.status === 401) {
+                    localStorage.removeItem('token')
+                    reject(data.error.message)
+                } else if (data.error != null) {
                     reject(data.error.message)
                 } else {
                     resolve(data.data)
@@ -92,7 +101,10 @@ export default class MkbService {
                     }
                 })
                 const data = await response.json()
-                if (data.error != null) {
+                if (data.error != null && response.status === 401) {
+                    localStorage.removeItem('token')
+                    reject(data.error.message)
+                } else if (data.error != null) {
                     reject(data.error.message)
                 } else {
                     resolve(data.data)
