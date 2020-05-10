@@ -12,7 +12,7 @@ import RegisterModal from "../landing/RegisterModal";
 import SaveMedicalReportModal from "./SaveMedicalReportModal";
 import {AlertContext} from "../../context/AlertContext";
 import AppointmentDetailModal from "./AppointmentDetailsModal";
-import CreateNewUserModal from "../landing/CreateNewUserModal";
+// import CreateNewUserModal from "../landing/CreateNewUserModal";
 import PatientService from "../../service/PatientService";
 
 const useStyles = makeStyles(theme => ({
@@ -58,12 +58,27 @@ const DoctorAppointmentsList = props => {
     const CloseModal=()=>{
         setIsNewUserModalOpen(false);
     }
+    const localizeStatus = status => {
+        switch (status) {
+            case 'FREE': return 'Свободно'
+            case 'RESERVED': return 'Занято'
+            case 'BLOCKED': return 'Нерабочее время'
+            case 'CANCELLED': return 'Свободно'
+            case 'FINISHED': return 'Завершено'
+            default: return status
+        }
+    }
 
     const fetchData = async () => {
         try {
 
             const data = await DoctorService.getCurrentDayAppointments(selectedDate)
-            const formattedData = data.map(a => { return { ...a, startTime: dateFormat(a.startTime, 'HH:MM') } })
+            const formattedData = data.map(a => { return {
+                ...a,
+                startTime: dateFormat(a.startTime, 'HH:MM') + ' - ' + dateFormat(a.endTime, 'HH:MM'),
+                localizedStatus: localizeStatus(a.status),
+                patientName: a.patientName || '-'
+            } })
             console.log(formattedData);
             setFutureAppointments(formattedData);
         } catch (err) {
@@ -98,7 +113,7 @@ const DoctorAppointmentsList = props => {
         <Container>
             <Typography className={classes.subheading}>Записи:</Typography>
             <Grid container spacing={5}>
-            <Grid item xs={3} md={3}>
+            <Grid item xs={12} md={3}>
             {/*<Typography className={classes.subheading}>Выберите дату:</Typography>*/}
             <DatePicker value={selectedDate}
                                         autoOk
@@ -109,13 +124,13 @@ const DoctorAppointmentsList = props => {
                                         onChange={handleDateChange}
             />
              </Grid>
-            <Grid item xs={9} md={9}>
+            <Grid item xs={12} md={9}>
                 <MaterialTable
                     title="Positioning Actions Column Preview"
                     columns={[
-                        { title: 'FullName', field: 'patientName' },
-                        { title: 'Time', field: 'startTime' },
-                        { title: 'Status', field:'status'}
+                        { title: 'Время', field: 'startTime',  },
+                        { title: 'Ф.И.О', field: 'patientName' },
+                        { title: 'Статус', field:'localizedStatus'}
                     ]}
                     data={futureAppointments}
                     tableRef={ tableRef }
@@ -124,21 +139,21 @@ const DoctorAppointmentsList = props => {
                             icon: 'library_add',
                             tooltip: 'Забронировать время',
                             onClick: (event, rowData) => openModal(dataRow.id),
-                            hidden: dataRow.status == 'RESERVED'
+                            hidden: dataRow.status !== 'FREE'
                         }),
                         rowData => ({
                             icon: 'create',
-                            tooltip: 'Заполнить историю болезни',
+                            tooltip: 'Заполнить медицинское заключение',
                             onClick: (event, rowData) =>
                                 showMedicalReport(rowData.id,rowData.patientName,rowData.patientBirthDate,rowData.patientPhoneNumber),
-                            hidden:rowData.status != 'RESERVED'
+                            hidden:rowData.status !== 'RESERVED'
                         }),
                         rowData => ({
                             icon: 'remove_circle',
                             tooltip: 'Отменить бронирование',
                             onClick: (event, rowData) =>
                                 cancelAppointment(rowData.id),
-                            hidden: rowData.status != 'RESERVED'
+                            hidden: rowData.status !== 'RESERVED'
                         }),
                         {
                             icon: 'refresh',
@@ -148,7 +163,10 @@ const DoctorAppointmentsList = props => {
                         }
                     ]}
                     options={{
-                        actionsColumnIndex: -1
+                        actionsColumnIndex: -1,
+                        padding: "dense",
+                        pageSizeOptions: [10, 15, 20],
+                        pageSize: 15
                     }}
                 />
                 <SaveMedicalReportModal
