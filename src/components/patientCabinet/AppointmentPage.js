@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { Button, List, ListItem, Grid, Container, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import { DatePicker } from '@material-ui/pickers';
@@ -7,6 +7,7 @@ import dateFormat from 'dateformat'
 import { useHistory } from 'react-router-dom';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
+import {AlertContext} from "../../context/AlertContext";
 
 const useStyles = makeStyles(theme => ({
     subheading: {
@@ -34,6 +35,8 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const AppointmentPage = props => {
+    const { showError, showSuccess } = useContext(AlertContext)
+
     const [selectedDate, handleDateChange] = useState(new Date())
     const [availableAppointments, setAvailableAppointments] = useState([])
     const [selectedTime, setSelectedTime] = useState(null)
@@ -45,11 +48,11 @@ const AppointmentPage = props => {
     const fetchData = async () => {
         try {
             const appointments = await PatientService.getAppointmentsByDate(selectedDate)
-            setAvailableAppointments(appointments.filter(a => a.status == 'FREE'))
+            setAvailableAppointments(appointments.filter(a => a.status === 'FREE'))
             if(matches)
                 setOrientate('portrait');
         } catch (err) {
-            console.error(err)
+            showError(err)
         }
     }
 
@@ -59,11 +62,11 @@ const AppointmentPage = props => {
 
     const makeAppointment = async () => {
         try {
-            console.log('makeAppointment')
+            showSuccess('Вы успешно записались на прием!')
             await PatientService.makeAppointment(selectedTime)
             history.push('/cabinet')
         } catch (err) {
-            console.error(err)
+            showError(err)
         }
     }
 
