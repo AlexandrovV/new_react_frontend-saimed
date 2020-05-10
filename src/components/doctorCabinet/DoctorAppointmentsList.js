@@ -106,7 +106,7 @@ const DoctorAppointmentsList = props => {
         try {
             await DoctorService.blockAppointment(id)
             fetchData()
-            showSuccess('Запись успешно отменена!')
+            showSuccess('Запись успешно заблокирована!')
         } catch (err) {
             showError(err)
         }
@@ -116,7 +116,7 @@ const DoctorAppointmentsList = props => {
         try {
             await DoctorService.unblockAppointment(id)
             fetchData()
-            showSuccess('Запись успешно отменена!')
+            showSuccess('Запись успешно разблокирована!')
         } catch (err) {
             showError(err)
         }
