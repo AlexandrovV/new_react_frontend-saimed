@@ -20,7 +20,10 @@ export default class PatientService {
                     }
                 })
                 const data = await response.json()
-                if (data.error != null) {
+                if (data.error != null && response.status === 401) {
+                    localStorage.removeItem('token')
+                    reject(data.error.message)
+                } else if (data.error != null) {
                     reject(data.error.message)
                 } else {
                     resolve(data.data)
@@ -34,15 +37,20 @@ export default class PatientService {
     static async getAppointmentsByDate(date) {
         return new Promise(async (resolve, reject) => {
             try {
+                const token = localStorage.getItem('token')
                 const response = await fetch(GET_APPOINTMENTS_BY_DATE_URL, {
                     method: 'post',
                     body: JSON.stringify({date: dateFormat(date, 'yyyy-mm-dd')}),
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + token
                     }
                 })
                 const data = await response.json()
-                if (data.error != null) {
+                if (data.error != null && response.status === 401) {
+                    localStorage.removeItem('token')
+                    reject(data.error.message)
+                } else if (data.error != null) {
                     reject(data.error.message)
                 } else {
                     resolve(data.data)
@@ -66,7 +74,10 @@ export default class PatientService {
                     }
                 })
                 const data = await response.json()
-                if (data.error != null) {
+                if (data.error != null && response.status === 401) {
+                    localStorage.removeItem('token')
+                    reject(data.error.message)
+                } else if (data.error != null) {
                     reject(data.error.message)
                 } else {
                     resolve(data.data)
@@ -90,7 +101,10 @@ export default class PatientService {
                     }
                 })
                 const data = await response.json()
-                if (data.error != null) {
+                if (data.error != null && response.status === 401) {
+                    localStorage.removeItem('token')
+                    reject(data.error.message)
+                } else if (data.error != null) {
                     reject(data.error.message)
                 } else {
                     resolve(data.data)
@@ -114,7 +128,10 @@ export default class PatientService {
                     }
                 })
                 const data = await response.json()
-                if (data.error != null) {
+                if (data.error != null && response.status === 401) {
+                    localStorage.removeItem('token')
+                    reject(data.error.message)
+                } else if (data.error != null) {
                     reject(data.error.message)
                 } else {
                     resolve(data.data)
@@ -126,6 +143,38 @@ export default class PatientService {
     }
 
     static async downloadMedicalReport(appointmentId) {
-        window.open(DOWNLOAD_MEDICAL_REPORT_URL + appointmentId)
+        return new Promise(async (resolve, reject) => {
+            const token = localStorage.getItem('token')
+            try {
+                const response = await fetch(DOWNLOAD_MEDICAL_REPORT_URL + appointmentId, {
+                    method: 'get',
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    }
+                })
+
+                if (response.status === 401) {
+                    localStorage.removeItem('token')
+                    reject('Вы не авторизованы!')
+                    return
+                }
+
+                const bytes = await response.arrayBuffer()
+                const blob = new Blob([bytes], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' })
+                const url = URL.createObjectURL(blob)
+
+                let link = document.createElement("a");
+                // link.style = "display: none";
+                // document.body.appendChild(link);
+                link.href = url;
+                link.download = "Медицинское_Заключение_Невропатолога.docx";
+                link.click();
+                URL.revokeObjectURL(url)
+                // window.open(url)
+                resolve()
+            } catch (err) {
+                reject('При скачивании медицинского заключения произошла ошибка')
+            }
+        })
     }
 }

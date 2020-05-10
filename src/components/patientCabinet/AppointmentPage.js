@@ -62,8 +62,8 @@ const AppointmentPage = props => {
 
     const makeAppointment = async () => {
         try {
-            showSuccess('Вы успешно записались на прием!')
             await PatientService.makeAppointment(selectedTime)
+            showSuccess('Вы успешно записались на прием!')
             history.push('/cabinet')
         } catch (err) {
             showError(err)
@@ -74,7 +74,7 @@ const AppointmentPage = props => {
     return (
         <Container className={classes.container}>
             <Grid container spacing={4} justify="space-around">
-                <Grid item xs={14} md={6} justify="center">
+                <Grid item xs={12} md={6} justify="center">
                     <Typography className={classes.subheading}>Выберите дату:</Typography>
                     <DatePicker value={selectedDate} 
                         autoOk

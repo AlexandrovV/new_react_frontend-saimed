@@ -22,6 +22,7 @@
     "date-fns": "^2.9.0",
     "dateformat": "^3.0.3",
     "dayjs": "^1.8.20",
+    "js-file-download": "^0.4.12",
     "luxon": "^1.22.0",
     "material-table": "^1.57.2",
     "moment": "^2.24.0",

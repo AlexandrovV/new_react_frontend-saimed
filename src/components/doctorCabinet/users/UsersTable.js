@@ -29,6 +29,26 @@ const UsersTable = props => {
         fetchData()
     }, [])
 
+    const blockUser = async (id) => {
+        try {
+            await DoctorService.blockUser(id)
+            fetchData()
+            showSuccess('Пользователь успешно заблокирован!')
+        } catch (err) {
+            showError(err)
+        }
+    }
+
+    const unblockUser = async (id) => {
+        try {
+            await DoctorService.unblockUser(id)
+            fetchData()
+            showSuccess('Пользователь успешно разблокирован!')
+        } catch (err) {
+            showError(err)
+        }
+    }
+
     return (
         <Container>
             <MaterialTable
@@ -38,9 +58,22 @@ const UsersTable = props => {
                     { title: "Ф.И.О.", field: "fullName" },
                     { title: "Номер телефона", field: "phoneNumber" },
                     { title: "Дата рождения", field: "birthDate", render: data => dateFormat(data.birthDate, 'dd.mm.yyyy') },
+                    { title: "Роль", field: "role" },
                 ]}
                 data={users}
                 actions={[
+                    dataRow => ({
+                        icon: 'block',
+                        tooltip: 'Заблокировать пользователя',
+                        onClick: (event, rowData) => blockUser(dataRow.id),
+                        hidden: dataRow.role === 'BLOCKED'
+                    }),
+                    dataRow => ({
+                        icon: 'done',
+                        tooltip: 'Разблокировать пользователя',
+                        onClick: (event, rowData) => unblockUser(dataRow.id),
+                        hidden: dataRow.role !== 'BLOCKED'
+                    }),
                     {
                         icon: 'add',
                         tooltip: 'Добавить пользователя',
@@ -49,6 +82,7 @@ const UsersTable = props => {
                     }
                 ]}
                 options={{
+                    actionsColumnIndex: -1,
                     padding: "dense",
                     pageSizeOptions: [10, 15, 20, 25],
                     pageSize: 20

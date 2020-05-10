@@ -134,6 +134,8 @@ const DoctorCabinetAppBar = props => {
         history.push('/')
     }
 
+    const email = getUser()?.email
+
     return (
         <div className={classes.root}>
         <AppBar
@@ -267,7 +269,7 @@ const DoctorCabinetAppBar = props => {
                         <Button className={classes.navButton}>Управление Пользователями</Button>
                     </Link>
                     <div className={classes.flexGrow}></div>
-                    {getUser().email}
+                    {email}
                     <IconButton
                         edge="end"
                         aria-label="account of current user"

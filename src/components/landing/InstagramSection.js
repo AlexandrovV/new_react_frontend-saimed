@@ -86,7 +86,6 @@ const InstagramSection = props => {
       window.addEventListener("load", () => {
          if(matches)
          setColNumbers(2);
-
          fetchData();
          timer.current = setTimeout(() => {
          setLoading(false);

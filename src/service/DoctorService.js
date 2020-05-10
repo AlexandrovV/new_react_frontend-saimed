@@ -15,6 +15,8 @@ const GET_MEDICAL_USERS_URL = SERVER_URL + '/api/doctor/getUsers'
 const MAKE_APPOINTMENT_USER =  SERVER_URL + '/api/doctor/assignPatient'
 const BLOCK_APPOINTMENT =  SERVER_URL + '/api/doctor/blockAppointment'
 const UNBLOCK_APPOINTMENT =  SERVER_URL + '/api/doctor/unblockAppointment'
+const BLOCK_USER =  SERVER_URL + '/api/doctor/blockUser'
+const UNBLOCK_USER =  SERVER_URL + '/api/doctor/unblockUser'
 
 export default class DoctorService {
     static async generateAppointments(fromDate, toDate) {
@@ -30,7 +32,10 @@ export default class DoctorService {
                     }
                 })
                 const data = await response.json()
-                if (data.error != null) {
+                if (data.error != null && response.status === 401) {
+                    localStorage.removeItem('token')
+                    reject(data.error.message)
+                } else if (data.error != null) {
                     reject(data.error.message)
                 } else {
                     resolve(data.data)
@@ -52,7 +57,10 @@ export default class DoctorService {
                     }
                 })
                 const data = await response.json()
-                if (data.error != null) {
+                if (data.error != null && response.status === 401) {
+                    localStorage.removeItem('token')
+                    reject(data.error.message)
+                } else if (data.error != null) {
                     reject(data.error.message)
                 } else {
                     resolve(data.data)
@@ -76,12 +84,18 @@ export default class DoctorService {
                     }
                 })
                 const data = await response.json()
-                if (data.error != null) {
+                console.log(data)
+
+                if (data.error != null && response.status === 401) {
+                    localStorage.removeItem('token')
+                    reject(data.error.message)
+                } else if (data.error != null) {
                     reject(data.error.message)
                 } else {
                     resolve(data.data)
                 }
             } catch (err) {
+                console.log(err)
                 reject(err.message)
             }
         })
@@ -98,7 +112,10 @@ export default class DoctorService {
                     }
                 })
                 const data = await response.json()
-                if (data.error != null) {
+                if (data.error != null && response.status === 401) {
+                    localStorage.removeItem('token')
+                    reject(data.error.message)
+                } else if (data.error != null) {
                     reject(data.error.message)
                 } else {
                     resolve(data.data)
@@ -131,7 +148,10 @@ export default class DoctorService {
                     }
                 })
                 const data = await response.json()
-                if (data.error != null) {
+                if (data.error != null && response.status === 401) {
+                    localStorage.removeItem('token')
+                    reject(data.error.message)
+                } else if (data.error != null) {
                     reject(data.error.message)
                 } else {
                     resolve(data.data)
@@ -155,7 +175,10 @@ export default class DoctorService {
                     }
                 })
                 const data = await response.json()
-                if (data.error != null) {
+                if (data.error != null && response.status === 401) {
+                    localStorage.removeItem('token')
+                    reject(data.error.message)
+                } else if (data.error != null) {
                     reject(data.error.message)
                 } else {
                     resolve(data.data)
@@ -179,7 +202,10 @@ export default class DoctorService {
                     }
                 })
                 const data = await response.json()
-                if (data.error != null) {
+                if (data.error != null && response.status === 401) {
+                    localStorage.removeItem('token')
+                    reject(data.error.message)
+                } else if (data.error != null) {
                     reject(data.error.message)
                 } else {
                     resolve(data.data)
@@ -190,43 +216,39 @@ export default class DoctorService {
         })
     }
     static async downloadMedicalReport(appointmentId) {
-        window.open(DOWNLOAD_MEDICAL_REPORT_URL + appointmentId)
-        // return new Promise(async (resolve, reject) => {
-        //     const token = localStorage.getItem('token')
-        //     try {
-        //         const response = await fetch(DOWNLOAD_MEDICAL_REPORT_URL + appointmentId, {
-        //             method: 'get',
-        //             headers: {
-        //                 'Authorization': 'Bearer ' + token
-        //             }
-        //         })
-        //         console.log(response)
-        //         const bytes = await response.arrayBuffer()
-        //         console.log(bytes)
-        //         const blob = new Blob([bytes], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' })
-        //         console.log(blob)
-        //         const url = URL.createObjectURL(blob)
-        //         console.log(url)
-        //         window.open(url)
+        return new Promise(async (resolve, reject) => {
+            const token = localStorage.getItem('token')
+            try {
+                const response = await fetch(DOWNLOAD_MEDICAL_REPORT_URL + appointmentId, {
+                    method: 'get',
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    }
+                })
 
-                
-        //         // const reader = response.body.getReader()
+                if (response.status === 401) {
+                    localStorage.removeItem('token')
+                    reject('Вы не авторизованы!')
+                    return
+                }
 
-    
-        //         // const response = new Response(stream)
-                
-        //         // console.log(data)
-        //         // const blob = new Blob([data], { type: data.type })
-        //         // console.log(blob)
-        //         // const url = URL.createObjectURL(blob)
-        //         // console.log(url)
-        //         // window.open(url)
+                const bytes = await response.arrayBuffer()
+                const blob = new Blob([bytes], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' })
+                const url = URL.createObjectURL(blob)
 
-        //         resolve()
-        //     } catch (err) {
-        //         reject(err.message)
-        //     }
-        // })
+                let link = document.createElement("a")
+                // link.style = "display: none"
+                // document.body.appendChild(link)
+                link.href = url
+                link.download = "Медицинское_Заключение_Невропатолога.docx"
+                link.click()
+                URL.revokeObjectURL(url)
+                // window.open(url)
+                resolve()
+            } catch (err) {
+                reject('При скачивании медицинского заключения произошла ошибка')
+            }
+        })
     }
 
     static async cancelAppointment(appointmentId) {
@@ -242,7 +264,10 @@ export default class DoctorService {
                     }
                 })
                 const data = await response.json()
-                if (data.error != null) {
+                if (data.error != null && response.status === 401) {
+                    localStorage.removeItem('token')
+                    reject(data.error.message)
+                } else if (data.error != null) {
                     reject(data.error.message)
                 } else {
                     resolve(data.data)
@@ -266,7 +291,10 @@ export default class DoctorService {
                     }
                 })
                 const data = await response.json()
-                if (data.error != null) {
+                if (data.error != null && response.status === 401) {
+                    localStorage.removeItem('token')
+                    reject(data.error.message)
+                } else if (data.error != null) {
                     reject(data.error.message)
                 } else {
                     resolve(data.data)
@@ -290,7 +318,64 @@ export default class DoctorService {
                     }
                 })
                 const data = await response.json()
-                if (data.error != null) {
+                if (data.error != null && response.status === 401) {
+                    localStorage.removeItem('token')
+                    reject(data.error.message)
+                } else if (data.error != null) {
+                    reject(data.error.message)
+                } else {
+                    resolve(data.data)
+                }
+            } catch (err) {
+                reject(err.message)
+            }
+        })
+    }
+
+    static async blockUser(id) {
+        return new Promise(async (resolve, reject) => {
+            const token = localStorage.getItem('token')
+            try {
+                const response = await fetch(BLOCK_USER, {
+                    method: 'post',
+                    body: JSON.stringify({id: id}),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                    }
+                })
+                const data = await response.json()
+                if (data.error != null && response.status === 401) {
+                    localStorage.removeItem('token')
+                    reject(data.error.message)
+                } else if (data.error != null) {
+                    reject(data.error.message)
+                } else {
+                    resolve(data.data)
+                }
+            } catch (err) {
+                reject(err.message)
+            }
+        })
+    }
+
+    static async unblockUser(id) {
+        return new Promise(async (resolve, reject) => {
+            const token = localStorage.getItem('token')
+            try {
+                const response = await fetch(UNBLOCK_USER, {
+                    method: 'post',
+                    body: JSON.stringify({id: id}),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                    }
+                })
+                const data = await response.json()
+                if (data.error != null && response.status === 401) {
+                    localStorage.removeItem('token')
+                    reject(data.error.message)
+                } else if (data.error != null) {
                     reject(data.error.message)
                 } else {
                     resolve(data.data)
@@ -312,7 +397,10 @@ export default class DoctorService {
                     }
                 })
                 const data = await response.json()
-                if (data.error != null) {
+                if (data.error != null && response.status === 401) {
+                    localStorage.removeItem('token')
+                    reject(data.error.message)
+                } else if (data.error != null) {
                     reject(data.error.message)
                 } else {
                     resolve(data.data)
