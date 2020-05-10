@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
@@ -13,58 +13,86 @@ import Alert from '@material-ui/lab/Alert';
 import { AlertContext } from '../../context/AlertContext'
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import ContactsIcon from '@material-ui/icons/Contacts';
+import InboxIcon from '@material-ui/icons/Inbox';
+import DraftsIcon from '@material-ui/icons/Drafts';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import DoctorService from "../../service/DoctorService";
+import dateFormat from "dateformat";
+import PatientService from "../../service/PatientService";
+
 const useStyles = makeStyles({
     dialogTitle: {
         textAlign: 'center'
-    },
-    IconSize:{
-        fontSize:"20vh",
-    },
-    FabSize:{
-        height:"25vh",
-        backgroundColor:"white"
     }
 })
 
 const IsNewUserModal = props => {
     const history = useHistory()
-    const [registerModalOpen, setRegisterModalOpen] = React.useState(false)
-    const { open, onClose,openRegisterModal} = props
+    const { open, onClose,} = props
+    const [selectedIndex, setSelectedIndex] = React.useState(1);
+    const [pastAppointments, setPastAppointments] = useState([])
+    const [selectedTime, setSelectedTime] = useState(null)
+    const {startTime,endTime, fetchData_Table} = props
+    const [value,setValue]=React.useState('');
+    const { showError, showSuccess } = useContext(AlertContext)
 
-    const openRegistration = () => {
-        onClose()
-        openRegisterModal()
+    const handleListItemClick = (event, index) => {
+        setSelectedIndex(index);
+    };
+    const fetchData = async () => {
+        try {
+
+            const data = await DoctorService.GetUsers()
+            console.log(data);
+            setPastAppointments(data);
+        } catch (err) {
+            console.error(err)
+        }
     }
+    const makeAppointment = async () => {
+        try {
+            console.log(value.id)
+            console.log(startTime)
+            await DoctorService.makeAppointmentByDoctor(startTime,value.id)
+            fetchData_Table();
+            showSuccess('Пользователь успешно забронирован');
+            onClose()
+        } catch (err) {
+            console.error(err)
+        }
+    }
+    useEffect(() => {
+        window.addEventListener("load", () => {
+            fetchData()
+        });
+    })
     const classes = useStyles()
     
     return (
         <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title" className={classes.dialogTitle}>
-                Забронировать время для пользователя
+                Выберите пользователя
             </DialogTitle>
+            <DialogContent>
+                    <Autocomplete
+                        id="combo-box-demo"
+                        options={pastAppointments}
+                        getOptionLabel={(option) => option.fullName}
+                        onChange={(event, newValue) => {
+                            setValue(newValue);
+                        }}
+                        renderInput={(params) => <TextField style={{ width: '100%' }}  {...params} label="Combo box" variant="outlined" />}
+                    />
+            </DialogContent>
             <DialogActions>
-                <Grid container spacing={1} justify="center" alignItems="center">
-                <Grid item xs={6} className={classes.dialogTitle}>
-                    <Fab variant="extended" onClick={openRegistration} className={classes.FabSize}>
-                    <PersonAddIcon className={classes.IconSize}/>
-                    </Fab>
-                    <div>
-                    Новый
-                    </div>
-                </Grid>
-                <Grid item xs={6} className={classes.dialogTitle}>
-                    <Fab variant="extended" className={classes.FabSize}>
-                    <ContactsIcon className={classes.IconSize}/>
-                    </Fab>
-                    <div>
-                    Существующий
-                    </div>
-                </Grid>
-            </Grid>
-         </DialogActions>
+                <Button onClick={makeAppointment} variant="contained" color="primary" >
+                    Записать
+                </Button>
+            </DialogActions>
         </Dialog>
     )
 }
+
 
   
 export default IsNewUserModal

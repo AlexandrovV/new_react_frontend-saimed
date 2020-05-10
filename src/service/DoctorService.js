@@ -6,10 +6,13 @@ const TODAY_APPOINTMENTS_URL = SERVER_URL + '/api/doctor/todayAppointments'
 const CANCEL_APPOINTMENT_URL = SERVER_URL + '/api/doctor/cancelAppointment'
 const APPOINTMENT_DETAILS_URL = SERVER_URL + '/api/doctor/appointmentDetails'
 const ADD_MEDICAL_REPORT_URL = SERVER_URL + '/api/doctor/addMedicalReport'
+const GET_APPOINTMENTS_BY_DATE_URL = SERVER_URL + '/api/doctor/appointmentsByDate'
 const GET_MEDICAL_REPORT_URL = SERVER_URL + '/api/doctor/getMedicalReport'
+const GET_USERS_URL =SERVER_URL + '/api/doctor/getUsers'
 const DOWNLOAD_MEDICAL_REPORT_URL = SERVER_URL + '/api/patient/downloadMedicalReport/'
 const GET_MKB_URL = SERVER_URL + '/api/doctor/mkb'
-
+const GET_MEDICAL_USERS_URL = SERVER_URL + '/api/doctor/getUsers'
+const MAKE_APPOINTMENT_USER =  SERVER_URL + '/api/doctor/assignPatient'
 export default class DoctorService {
     static async generateAppointments(fromDate, toDate) {
         return new Promise(async (resolve, reject) => {
@@ -40,6 +43,52 @@ export default class DoctorService {
             const token = localStorage.getItem('token')
             try {
                 const response = await fetch(TODAY_APPOINTMENTS_URL, {
+                    method: 'get',
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    }
+                })
+                const data = await response.json()
+                if (data.error != null) {
+                    reject(data.error.message)
+                } else {
+                    resolve(data.data)
+                }
+            } catch (err) {
+                reject(err.message)
+            }
+        })
+    }
+
+    static async getCurrentDayAppointments(date){
+        return new Promise(async (resolve, reject) => {
+            try {
+                const token = localStorage.getItem('token')
+                const response = await fetch(GET_APPOINTMENTS_BY_DATE_URL, {
+                    method: 'post',
+                    body: JSON.stringify({date: dateFormat(date, 'yyyy-mm-dd')}),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                    }
+                })
+                const data = await response.json()
+                if (data.error != null) {
+                    reject(data.error.message)
+                } else {
+                    resolve(data.data)
+                }
+            } catch (err) {
+                reject(err.message)
+            }
+        })
+    }
+
+    static async GetUsers(){
+        return new Promise(async (resolve, reject) => {
+            try {
+                const token = localStorage.getItem('token')
+                const response = await fetch(GET_USERS_URL, {
                     method: 'get',
                     headers: {
                         'Authorization': 'Bearer ' + token
@@ -111,6 +160,29 @@ export default class DoctorService {
         })
     }
 
+    static async makeAppointmentByDoctor(appointmentId,userId){
+        return new Promise(async (resolve, reject) => {
+            const token = localStorage.getItem('token')
+            try {
+                const response = await fetch(MAKE_APPOINTMENT_USER, {
+                    method: 'post',
+                    body: JSON.stringify({appointmentId: appointmentId,userId:userId}),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                    }
+                })
+                const data = await response.json()
+                if (data.error != null) {
+                    reject(data.error.message)
+                } else {
+                    resolve(data.data)
+                }
+            } catch (err) {
+                reject(err.message)
+            }
+        })
+    }
     static async downloadMedicalReport(appointmentId) {
         window.open(DOWNLOAD_MEDICAL_REPORT_URL + appointmentId)
         // return new Promise(async (resolve, reject) => {
