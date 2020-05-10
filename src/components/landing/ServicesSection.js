@@ -1,21 +1,16 @@
-import React from 'react'
-import { Container, Typography, Grid, Grow } from '@material-ui/core'
+import React, {useEffect} from 'react'
+import {Container, Grid, Grow, Typography} from '@material-ui/core'
 import MobileStepper from '@material-ui/core/MobileStepper'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStethoscope, faCircle, faUserNurse, faSyringe } from '@fortawesome/free-solid-svg-icons'
-import { makeStyles, createStyles, useTheme } from '@material-ui/styles'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faCircle, faStethoscope, faSyringe, faUserNurse} from '@fortawesome/free-solid-svg-icons'
+import {makeStyles, useTheme} from '@material-ui/styles'
 import Button from '@material-ui/core/Button';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import Paper from '@material-ui/core/Paper';
-import { useEffect } from 'react';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Divider from '@material-ui/core/Divider';
 import '../../backimg.css'
-import Box from '@material-ui/core/Box';
-import classNames from 'classnames';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
 
 
 const useStyles = makeStyles(theme => ({
@@ -211,7 +206,6 @@ const ServicesSection = props => {
                 <Grid container  className={classes.grid} spacing={6}>
                     <Grid item xs={12}>
                         <Typography variant="h2" className={classes.sectionHeading}>Наши услуги</Typography>
-                        <Typography variant="h3" className={classes.sectionSubheading}>Lorem ipsum dolor sit amet consectetur.</Typography>
                     </Grid>
                     <Grid item xs={4}>
                     <Grow in={checked}>
