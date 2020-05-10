@@ -36,6 +36,7 @@ const useStyles = makeStyles(theme => ({
 
 const AppointmentPage = props => {
     const { showError, showSuccess } = useContext(AlertContext)
+    let moment = require('moment');
 
     const [selectedDate, handleDateChange] = useState(new Date())
     const [availableAppointments, setAvailableAppointments] = useState([])
@@ -98,6 +99,7 @@ const AppointmentPage = props => {
                                             variant={selectedTime === a.id ? "contained" : "outlined"}
                                             color={selectedTime === a.id ? "primary" : "default"}
                                             onClick={e => setSelectedTime(a.id)}>
+                                            {moment(a.startTime).format('hh:mm')}-{moment(a.endTime).format('hh:mm')}
                                             {/*{dateFormat(a.startTime, 'HH:MM')} - {dateFormat(a.endTime, 'HH:MM')}*/}
                                         </Button>
                                     </ListItem>

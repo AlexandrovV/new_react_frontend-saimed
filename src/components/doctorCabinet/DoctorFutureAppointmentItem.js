@@ -147,6 +147,7 @@ const DoctorFutureAppointmentItem = props => {
     const classes = useStyles()
     const theme = useTheme()
     const { showError, showSuccess } = useContext(AlertContext)
+    let moment = require('moment');
 
     const [detailsOpen, setDetailsOpen] = useState(false)
     const [medicalReportOpen, setMedicalReportOpen] = useState(false)
@@ -190,7 +191,8 @@ const DoctorFutureAppointmentItem = props => {
                <Grid container spacing={3} justify="flex-start" alignItems="center">                    
                 <Grid item xs={6}>
                 <Typography>
-                  {dateFormat(date, 'dddd dd mmmm')}, {dateFormat(startTime, 'HH:MM')} - {dateFormat(endTime, 'HH:MM')}
+                    {moment(date).format("LL")}, {moment(startTime).format('hh:mm')}-{moment(endTime).format('hh:mm')}
+                    {/*{dateFormat(date, 'dddd dd mmmm')}, {dateFormat(startTime, 'HH:MM')} - {dateFormat(endTime, 'HH:MM')}*/}
                   </Typography>
                 </Grid> 
                 {userId ? 

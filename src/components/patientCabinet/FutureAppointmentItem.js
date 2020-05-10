@@ -79,6 +79,7 @@ const FutureAppointmentItem = props => {
     const [registerModalOpen, setRegisterModalOpen] = React.useState(false)
     const matches = useMediaQuery('(min-height:800px) and (min-width:480px)');
     const matcheSmall = useMediaQuery(theme.breakpoints.down('sm'));
+    let moment = require('moment');
     const openRegisterModal = () => setRegisterModalOpen(true)
     const closeRegisterModal = () => setRegisterModalOpen(false)
     const cancelAppointment = async () => {
@@ -103,7 +104,9 @@ const FutureAppointmentItem = props => {
                   alignItems="center">
                 <Grid item xs={6} md={6} xl={6}>
                     <Typography variant="h6" className={classes.font_for_typography}>
-                        {dateFormat(date, 'dddd dd mmmm')}, {dateFormat(startTime, 'HH:MM')} - {dateFormat(endTime, 'HH:MM')}
+                        {moment(date).format("LL")}, {moment(startTime).format('hh:mm')}-{moment(endTime).format('hh:mm')}
+
+                        {/*{dateFormat(date, 'dddd dd mmmm')}, {dateFormat(startTime, 'HH:MM')} - {dateFormat(endTime, 'HH:MM')}*/}
                     </Typography>
                 </Grid>
 

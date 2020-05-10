@@ -43,6 +43,7 @@ const DoctorAppointmentsList = props => {
         setAppointmentId(id)
         setIsNewUserModalOpen(true);
     }
+    let moment = require('moment');
 
     const openDetailsModal = id => {
         setAppointmentId(id)
@@ -80,7 +81,8 @@ const DoctorAppointmentsList = props => {
             const formattedData = data.map(a => {
                 return {
                     ...a,
-                    startTime: dateFormat(a.startTime, 'HH:MM') + ' - ' + dateFormat(a.endTime, 'HH:MM'),
+                    startTime: moment(a.startTime).format('hh:mm')+ ' - ' +moment(a.endTime).format('hh:mm'),
+                // dateFormat(a.startTime, 'HH:MM') + ' - ' + dateFormat(a.endTime, 'HH:MM'),
                     localizedStatus: localizeStatus(a.status),
                     patientName: a.patientName || '-',
                     patientPhoneNumber: a.patientPhoneNumber || '-'

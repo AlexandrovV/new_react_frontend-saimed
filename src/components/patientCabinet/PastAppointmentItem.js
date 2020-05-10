@@ -6,7 +6,6 @@ import Fab from '@material-ui/core/Fab';
 import MedicalReportModal from "./MedicalReportModal";
 import DescriptionIcon from "@material-ui/icons/Description";
 import { useEffect } from 'react';
-
 const useStyles = makeStyles(theme => ({
     appointmentContainer: {
         paddingTop: '15px',
@@ -69,7 +68,7 @@ const PastAppointmentItem = props => {
     const classes = useStyles()
     const [medicalReportOpen, setMedicalReportOpen] = useState(false)
     const { date, startTime, endTime, appointmentId, onCancel } = props
-
+    let moment = require('moment');
     const openMedicalReport = () => setMedicalReportOpen(true)
     const closeMedicalReport = () => setMedicalReportOpen(false)
     
@@ -80,6 +79,13 @@ const PastAppointmentItem = props => {
             <Grid container spacing={3} justify="space-between" alignItems="center"> 
                 <Grid item xs={6} md={6} xl={6}>
                     <Typography variant="h6" className={classes.font_for_typography}>
+                        {/*{new Intl.DateTimeFormat("en-GB", {*/}
+                        {/*    year: "numeric",*/}
+                        {/*    month: "long",*/}
+                        {/*    day: "2-digit"*/}
+                        {/*}).format(Date.parse(date))}*/}
+                        {moment(date).format("LL")}, {moment(startTime).format('hh:mm')}-{moment(endTime).format('hh:mm')}
+                        {/*{moment("1995-12-25")}*/}
                         {/*{dateFormat(date.replace(' ','T'), 'dddd dd mmmm')}, {dateFormat(startTime.replace(' ','T'), 'HH:MM')} - {dateFormat(endTime.replace(' ','T'), 'HH:MM')}*/}
                     </Typography>
                 </Grid>

@@ -13,6 +13,7 @@ const useStyles = makeStyles(theme => ({
 const DoctorPastAppointmentItem = props => {
     const classes = useStyles()
     const [medicalReportOpen, setMedicalReportOpen] = useState(false)
+    let moment = require('moment');
 
     const { date, startTime, endTime, appointmentId, onCancel } = props
 
@@ -23,7 +24,11 @@ const DoctorPastAppointmentItem = props => {
         <Card  className={classes.appointmentContainer}>
             <Grid container spacing={3} justify="space-between" alignItems="center"> 
                 <Grid item>
-                    <Typography>{dateFormat(date, 'dddd dd mmmm')}, {dateFormat(startTime, 'HH:MM')} - {dateFormat(endTime, 'HH:MM')}</Typography>
+                    <Typography>
+                        {moment(date).format("LL")}, {moment(startTime).format('hh:mm')}-{moment(endTime).format('hh:mm')}
+
+                        {/*{dateFormat(date, 'dddd dd mmmm')}, {dateFormat(startTime, 'HH:MM')} - {dateFormat(endTime, 'HH:MM')}*/}
+                    </Typography>
                 </Grid>
                 <Grid item>
                     <Button variant="outlined" onClick={openMedicalReport}>Заключение</Button>
