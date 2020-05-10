@@ -46,7 +46,7 @@ const DoctorAppointmentsList = props => {
     const [patientBirthDate,setPatientBirthDate]=React.useState('')
 
 
-    const { onSaveMedicalReport} = props
+    // const { onSaveMedicalReport} = props
 
     const openRegisterModal = () => setCreateNewUserModalOpen(true)
     const closeCreateNewUserModal = () => setCreateNewUserModalOpen(false)
@@ -176,7 +176,7 @@ const DoctorAppointmentsList = props => {
                     patientName={patientName}
                     patientPhoneNumber={patientPhoneNumber}
                     patientBirthDate={patientBirthDate}
-                    onSaveMedicalReport={onSaveMedicalReport}
+                    // onSaveMedicalReport={onSaveMedicalReport}
                 />
 
                 <IsNewUserModal open={IsNewUserModalOpen} onClose={CloseModal} openRegisterModal={openRegisterModal} startTime={appointmentId} fetchData_Table={fetchData}/>

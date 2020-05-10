@@ -32,9 +32,10 @@ const useStyles = makeStyles(theme => ({
         color:red[500]
       },
       [theme.breakpoints.up('xl')]:{
-        height:"3vh",
+        height:"4vh",
         fontSize:"1vw"
       },
+
       [theme.breakpoints.down('xs')]: {
         display:'none',
       },
@@ -44,7 +45,7 @@ const useStyles = makeStyles(theme => ({
       width:"3vh",
       height:"5vh",
       [theme.breakpoints.up('xl')]:{
-        height:"2vh",
+        height:"3vh",
         fontSize:"1vw"
       },
     },
@@ -65,6 +66,7 @@ const useStyles = makeStyles(theme => ({
         backgroundColor:"white",
         color:red[500]
       },
+
       [theme.breakpoints.down('xs')]: {
         display:'inline',
         fontSize:'1.8vw',

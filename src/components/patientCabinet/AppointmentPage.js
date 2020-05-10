@@ -5,8 +5,10 @@ import { DatePicker } from '@material-ui/pickers';
 import PatientService from '../../service/PatientService';
 import dateFormat from 'dateformat'
 import { useHistory } from 'react-router-dom';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
     subheading: {
         fontFamily: "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';",
         fontSize: '20px',
@@ -17,20 +19,35 @@ const useStyles = makeStyles({
         marginTop: '20px',
         marginBottom: '20px'
     },
-})
+    for_phone:{
+        display:'none',
+        [theme.breakpoints.down('xs')]: {
+            display:'inline',
+        },
+    },
+    for_pc:{
+        display:'none',
+        [theme.breakpoints.down('xs')]: {
+            display:'none',
+        },
+    }
+}))
 
 const AppointmentPage = props => {
     const [selectedDate, handleDateChange] = useState(new Date())
     const [availableAppointments, setAvailableAppointments] = useState([])
     const [selectedTime, setSelectedTime] = useState(null)
- 
+    const [orientate,setOrientate] = useState('landscape')
     const classes = useStyles()
     const history = useHistory()
-
+    const theme = useTheme();
+    const matches = useMediaQuery(theme.breakpoints.down('xs'));
     const fetchData = async () => {
         try {
             const appointments = await PatientService.getAppointmentsByDate(selectedDate)
             setAvailableAppointments(appointments.filter(a => a.status == 'FREE'))
+            if(matches)
+                setOrientate('portrait');
         } catch (err) {
             console.error(err)
         }
@@ -54,13 +71,14 @@ const AppointmentPage = props => {
     return (
         <Container className={classes.container}>
             <Grid container spacing={4} justify="space-around">
-                <Grid item xs={12}  md={6}>
+                <Grid item xs={14} md={6} justify="center">
                     <Typography className={classes.subheading}>Выберите дату:</Typography>
                     <DatePicker value={selectedDate} 
                         autoOk
-                        variant="static"
+                        variant={matches? "dialog":"static"}
                         disablePast
-                        orientation="landscape"
+                        inputVariant="outlined"
+                        orientation={matches? "portrait":"landscape"}
                         openTo="date"
                         onChange={handleDateChange}
                     />
@@ -68,10 +86,10 @@ const AppointmentPage = props => {
                 <Grid item xs={12} md={6}>
                     <Typography className={classes.subheading}>Выберите время:</Typography>
                     <List>
-                        <Grid container xs={7}>
+                        <Grid container xs={12}>
                         {
                                 availableAppointments.length > 0 ? availableAppointments.map(a =>
-                                <Grid item xs={6} >
+                                <Grid item xs={6}>
                                     <ListItem key={a.id}>
                                         <Button
                                             variant={selectedTime === a.id ? "contained" : "outlined"}
