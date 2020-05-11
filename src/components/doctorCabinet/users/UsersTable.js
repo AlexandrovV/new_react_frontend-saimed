@@ -13,6 +13,7 @@ const UsersTable = props => {
 
     const openCreateModal = () => setCreateModalOpen(true)
     const closeCreateModal = () => setCreateModalOpen(false)
+    let moment = require('moment');
 
     const { showSuccess, showError } = useContext(AlertContext)
 
@@ -57,7 +58,11 @@ const UsersTable = props => {
                     { title: "E-mail", field: "email", searchable: true },
                     { title: "Ф.И.О.", field: "fullName" },
                     { title: "Номер телефона", field: "phoneNumber" },
-                    { title: "Дата рождения", field: "birthDate", render: data => dateFormat(data.birthDate, 'dd.mm.yyyy') },
+                    { title: "Дата рождения", field: "birthDate", 
+                    render:data=>
+                    moment(data.birthDate).format("L")
+                    //  data => dateFormat(data.birthDate, 'dd.mm.yyyy') 
+                    },
                     { title: "Роль", field: "role" },
                 ]}
                 data={users}
