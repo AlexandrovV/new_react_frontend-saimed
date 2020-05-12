@@ -53,7 +53,7 @@ const UsersTable = props => {
     return (
         <Container>
             <MaterialTable
-                title="Международная классификация болезней"
+                title="Пользователи SAIMED"
                 columns={[
                     { title: "E-mail", field: "email", searchable: true },
                     { title: "Ф.И.О.", field: "fullName" },
