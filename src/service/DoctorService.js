@@ -140,7 +140,9 @@ export default class DoctorService {
                         complaints: medicalReport.complaints,
                         anamnesMorbi: medicalReport.anamnesMorbi,
                         recommendations: medicalReport.recommendations,
-                        mkbDiagnosisId: medicalReport.mkbDiagnosisId
+                        mkbDiagnosisId: medicalReport.mkbDiagnosisId,
+                        ObjectiveMonitoring:medicalReport.ObjectiveMonitoring,
+                        Date_next_coming:medicalReport.Date_next_coming
                     }),
                     headers: {
                         'Content-Type': 'application/json',

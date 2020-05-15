@@ -33,8 +33,8 @@ const SaveMedicalReportModal = props => {
     const [anamnesMorbi, setAnamnesMorbi] = useState('')
     const [recommendations, setRecommendations] = useState('')
     const [selectedDiagnosis, setSelectedDiagnosis] = useState(null)
-
-
+    const [ObjectiveMonitoring, setObjectiveMonitoring] = useState('')
+    const [Date_next_coming, setDate_next_coming] = useState(Date())
     const saveMedicalReport = async () => {
         try {
             await DoctorService.addMedicalReport(
@@ -46,7 +46,9 @@ const SaveMedicalReportModal = props => {
                     complaints,
                     anamnesMorbi,
                     recommendations,
-                    mkbDiagnosisId: selectedDiagnosis
+                    mkbDiagnosisId: selectedDiagnosis,
+                    ObjectiveMonitoring,
+                    Date_next_coming
                 }
             )
             onSaveMedicalReport()
@@ -111,6 +113,26 @@ const SaveMedicalReportModal = props => {
                     onChange={e => setAnamnesMorbi(e.target.value)}
                     multiline
                     fullWidth
+                />
+                <TextField
+                    className={classes.marginTop}
+                    value={ObjectiveMonitoring}
+                    placeholder="Введите объективный осмотр"
+                    label="Объективный осмотр"
+                    onChange={e => setObjectiveMonitoring(e.target.value)}
+                    multiline
+                    // rows={5}
+                    // variant="outlined"
+                    fullWidth
+                />
+                <KeyboardDatePicker
+                    className={classes.marginTop}
+                    label="Дата следующего приёма пациента"
+                     value={Date_next_coming}
+                    onChange={setDate_next_coming}
+                    fullWidth
+                    format="dd.MM.yyyy"
+                    autoOk
                 />
                 <MkbSelect selectedDiagnosis={selectedDiagnosis} setSelectedDiagnosis={setSelectedDiagnosis} />
                 <TextField

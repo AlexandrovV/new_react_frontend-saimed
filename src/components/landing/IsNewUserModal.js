@@ -48,9 +48,10 @@ const IsNewUserModal = props => {
         }
     }
     useEffect(() => {
-        window.addEventListener("load", () => {
-            fetchData()
-        });
+        // window.addEventListener("load", () => {
+        //     fetchData()
+        // });
+        fetchData()
     })
     const classes = useStyles()
     
