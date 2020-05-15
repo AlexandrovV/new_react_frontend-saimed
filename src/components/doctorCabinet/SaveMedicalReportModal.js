@@ -28,15 +28,17 @@ const SaveMedicalReportModal = props => {
 
     const [patientName, setPatientName] = useState('')
     const [patientPhoneNumber, setPatientPhoneNumber] = useState('')
-    const [patientBirthDate, setPatientBirthDate] = useState(Date())
+    const [patientBirthDate, setPatientBirthDate] = useState(new Date())
     const [complaints, setComplaints] = useState('')
     const [anamnesMorbi, setAnamnesMorbi] = useState('')
     const [recommendations, setRecommendations] = useState('')
     const [selectedDiagnosis, setSelectedDiagnosis] = useState(null)
-    const [ObjectiveMonitoring, setObjectiveMonitoring] = useState('')
-    const [Date_next_coming, setDate_next_coming] = useState(Date())
+    const [objectiveInspection, setObjectiveInspection] = useState('')
+    const [nextAppointmentDate, setNextAppointmentDate] = useState(new Date())
+
     const saveMedicalReport = async () => {
         try {
+            console.log(nextAppointmentDate)
             await DoctorService.addMedicalReport(
                 {
                     patientName,
@@ -44,11 +46,11 @@ const SaveMedicalReportModal = props => {
                     patientBirthDate,
                     appointmentId,
                     complaints,
+                    objectiveInspection,
                     anamnesMorbi,
                     recommendations,
                     mkbDiagnosisId: selectedDiagnosis,
-                    ObjectiveMonitoring,
-                    Date_next_coming
+                    nextAppointmentDate
                 }
             )
             onSaveMedicalReport()
@@ -116,23 +118,14 @@ const SaveMedicalReportModal = props => {
                 />
                 <TextField
                     className={classes.marginTop}
-                    value={ObjectiveMonitoring}
+                    value={objectiveInspection}
                     placeholder="Введите объективный осмотр"
                     label="Объективный осмотр"
-                    onChange={e => setObjectiveMonitoring(e.target.value)}
+                    onChange={e => setObjectiveInspection(e.target.value)}
                     multiline
                     // rows={5}
                     // variant="outlined"
                     fullWidth
-                />
-                <KeyboardDatePicker
-                    className={classes.marginTop}
-                    label="Дата следующего приёма пациента"
-                     value={Date_next_coming}
-                    onChange={setDate_next_coming}
-                    fullWidth
-                    format="dd.MM.yyyy"
-                    autoOk
                 />
                 <MkbSelect selectedDiagnosis={selectedDiagnosis} setSelectedDiagnosis={setSelectedDiagnosis} />
                 <TextField
@@ -143,6 +136,15 @@ const SaveMedicalReportModal = props => {
                     onChange={e => setRecommendations(e.target.value)}
                     multiline
                     fullWidth
+                />
+                <KeyboardDatePicker
+                    className={classes.marginTop}
+                    label="Дата следующего приёма пациента"
+                    value={nextAppointmentDate}
+                    onChange={setNextAppointmentDate}
+                    fullWidth
+                    format="dd.MM.yyyy"
+                    autoOk
                 />
             </DialogContent>
             <DialogActions>

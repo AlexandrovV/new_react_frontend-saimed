@@ -138,11 +138,11 @@ export default class DoctorService {
                         patientBirthDate: medicalReport.patientBirthDate,
                         appointmentId: medicalReport.appointmentId,
                         complaints: medicalReport.complaints,
+                        objectiveInspection: medicalReport.objectiveInspection,
                         anamnesMorbi: medicalReport.anamnesMorbi,
                         recommendations: medicalReport.recommendations,
                         mkbDiagnosisId: medicalReport.mkbDiagnosisId,
-                        ObjectiveMonitoring:medicalReport.ObjectiveMonitoring,
-                        Date_next_coming:medicalReport.Date_next_coming
+                        nextAppointmentDate: medicalReport.nextAppointmentDate
                     }),
                     headers: {
                         'Content-Type': 'application/json',

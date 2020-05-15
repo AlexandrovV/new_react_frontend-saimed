@@ -52,7 +52,7 @@ const IsNewUserModal = props => {
         //     fetchData()
         // });
         fetchData()
-    })
+    }, [])
     const classes = useStyles()
     
     return (
