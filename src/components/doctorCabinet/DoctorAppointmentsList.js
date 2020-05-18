@@ -70,6 +70,8 @@ const DoctorAppointmentsList = props => {
                 return 'Свободно'
             case 'FINISHED':
                 return 'Завершено'
+            case 'TIMEOUT':
+                return 'Время прошло'
             default:
                 return status
         }
@@ -79,13 +81,15 @@ const DoctorAppointmentsList = props => {
         try {
             const data = await DoctorService.getAppointmentsByDate(selectedDate)
             const formattedData = data.map(a => {
+                console.log(moment(a.startTime).isBefore(Date.now()))
                 return {
                     ...a,
-                    startTime: moment(a.startTime).format('hh:mm')+ ' - ' +moment(a.endTime).format('hh:mm'),
-                // dateFormat(a.startTime, 'HH:MM') + ' - ' + dateFormat(a.endTime, 'HH:MM'),
+                    startTime: moment(a.startTime).format('HH:mm')+ ' - ' +moment(a.endTime).format('HH:mm'),
+                    // dateFormat(a.startTime, 'HH:MM') + ' - ' + dateFormat(a.endTime, 'HH:MM'),
                     localizedStatus: localizeStatus(a.status),
                     patientName: a.patientName || '-',
-                    patientPhoneNumber: a.patientPhoneNumber || '-'
+                    patientPhoneNumber: a.patientPhoneNumber || '-',
+                    time_status:moment(a.startTime).isBefore(Date.now())
                 }
             })
             setFutureAppointments(formattedData);
@@ -147,6 +151,7 @@ const DoctorAppointmentsList = props => {
                                 variant="static"
                                 orientation="portrait"
                                 openTo="date"
+                                disablePast="true"
                                 onChange={handleDateChange}
                     />
                 </Grid>
@@ -166,39 +171,42 @@ const DoctorAppointmentsList = props => {
                                 icon: 'library_add',
                                 tooltip: 'Забронировать время',
                                 onClick: (event, rowData) => openModal(dataRow.id),
-                                hidden: dataRow.status !== 'FREE'
+                                hidden: dataRow.status !== 'FREE' || dataRow.time_status,
                             }),
                             rowData => ({
                                 icon: 'create',
                                 tooltip: 'Заполнить медицинское заключение',
                                 onClick: (event, rowData) =>
                                     showMedicalReport(rowData.id, rowData.patientName, rowData.patientBirthDate, rowData.patientPhoneNumber),
-                                hidden: rowData.status !== 'RESERVED'
+                                hidden: rowData.status !== 'RESERVED' || rowData.time_status,
+
                             }),
                             rowData => ({
                                 icon: 'remove_circle',
                                 tooltip: 'Отменить бронирование',
                                 onClick: (event, rowData) =>
                                     cancelAppointment(rowData.id),
-                                hidden: rowData.status !== 'RESERVED'
+                                hidden: rowData.status !== 'RESERVED' || rowData.time_status,
+
                             }),
                             rowData => ({
                                 icon: 'receipt',
                                 tooltip: 'Медицинское заключение',
                                 onClick: (event, rowData) => openDetailsModal(rowData.id),
-                                hidden: rowData.status !== 'FINISHED'
+                                hidden: rowData.status !== 'FINISHED' || rowData.time_status,
+
                             }),
                             rowData => ({
                                 icon: 'visibility_off',
                                 tooltip: 'Заблокировать время',
                                 onClick: (event, rowData) => blockAppointment(rowData.id),
-                                hidden: rowData.status !== 'FREE'
+                                hidden: rowData.status !== 'FREE' || rowData.time_status,
                             }),
                             rowData => ({
                                 icon: 'visibility',
                                 tooltip: 'Разблокировать время',
                                 onClick: (event, rowData) => unblockAppointment(rowData.id),
-                                hidden: rowData.status !== 'BLOCKED'
+                                hidden: rowData.status !== 'BLOCKED' || rowData.time_status,
                             }),
                             {
                                 icon: 'refresh',
