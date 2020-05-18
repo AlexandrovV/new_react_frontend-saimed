@@ -9,6 +9,7 @@ import {useHistory} from "react-router-dom"
 import {AlertContext} from '../../context/AlertContext'
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import DoctorService from "../../service/DoctorService";
+import RegisterNewUser from '../landing/RegisterNewUser';
 
 const useStyles = makeStyles({
     dialogTitle: {
@@ -25,7 +26,12 @@ const IsNewUserModal = props => {
     const {startTime,endTime, fetchData_Table} = props
     const [value,setValue]=React.useState('');
     const { showError, showSuccess } = useContext(AlertContext)
+    // const {  openRegisterModal } = props
+    const [registerModalOpen, setRegisterModalOpen] = useState(false)
 
+    const openRegistration = () => {
+        openRegisterModal()
+    }
     const handleListItemClick = (event, index) => {
         setSelectedIndex(index);
     };
@@ -37,6 +43,8 @@ const IsNewUserModal = props => {
             showError(err)
         }
     }
+    const openRegisterModal = () => setRegisterModalOpen(true)
+    const closeRegisterModal = () => setRegisterModalOpen(false)
     const makeAppointment = async () => {
         try {
             await DoctorService.makeAppointmentByDoctor(startTime,value.id)
@@ -47,6 +55,7 @@ const IsNewUserModal = props => {
             console.error(err)
         }
     }
+
     useEffect(() => {
         // window.addEventListener("load", () => {
         //     fetchData()
@@ -75,7 +84,14 @@ const IsNewUserModal = props => {
                 <Button onClick={makeAppointment} variant="contained" color="primary" >
                     Записать
                 </Button>
+                <Button  onClick={openRegistration} variant="contained" color="primary">
+                    Создать пользователя
+                </Button>
             </DialogActions>
+            <RegisterNewUser open={registerModalOpen} 
+                    onClose={closeRegisterModal}
+                    fetchData={fetchData}
+                    />
         </Dialog>
     )
 }

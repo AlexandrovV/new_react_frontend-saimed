@@ -9,6 +9,7 @@ import IsNewUserModal from "../landing/IsNewUserModal";
 import SaveMedicalReportModal from "./SaveMedicalReportModal";
 import {AlertContext} from "../../context/AlertContext";
 import MedicalReportModal from "./MedicalReportModal";
+import RegisterNewUser from '../landing/RegisterNewUser';
 
 const useStyles = makeStyles(theme => ({
     subheading: {
@@ -58,6 +59,7 @@ const DoctorAppointmentsList = props => {
         fetchData()
     }
 
+
     const localizeStatus = status => {
         switch (status) {
             case 'FREE':
@@ -81,7 +83,6 @@ const DoctorAppointmentsList = props => {
         try {
             const data = await DoctorService.getAppointmentsByDate(selectedDate)
             const formattedData = data.map(a => {
-                console.log(moment(a.startTime).isBefore(Date.now()))
                 return {
                     ...a,
                     startTime: moment(a.startTime).format('HH:mm')+ ' - ' +moment(a.endTime).format('HH:mm'),
@@ -233,13 +234,15 @@ const DoctorAppointmentsList = props => {
                     />
 
                     <IsNewUserModal open={IsNewUserModalOpen} onClose={CloseModal} startTime={appointmentId}
-                                    fetchData_Table={fetchData}/>
+                                    fetchData_Table={fetchData} />
 
                     <MedicalReportModal
                         open={detailsOpen}
                         onClose={closeDetails}
                         appointmentId={appointmentId}
                     />
+                    
+
                 </Grid>
             </Grid>
 

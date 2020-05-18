@@ -49,7 +49,8 @@ const AppointmentPage = props => {
     const fetchData = async () => {
         try {
             const appointments = await PatientService.getAppointmentsByDate(selectedDate)
-            setAvailableAppointments(appointments.filter(a => a.status === 'FREE'))
+            setAvailableAppointments(appointments.filter(a => a.status === 'FREE' && moment(a.startTime).isAfter(Date.now())))
+
             if(matches)
                 setOrientate('portrait');
         } catch (err) {
@@ -75,7 +76,7 @@ const AppointmentPage = props => {
     return (
         <Container className={classes.container}>
             <Grid container spacing={4} justify="space-around">
-                <Grid item xs={12} md={6} justify="center">
+                <Grid item xs={12} md={6} >
                     <Typography className={classes.subheading}>Выберите дату:</Typography>
                     <DatePicker value={selectedDate} 
                         autoOk
@@ -90,7 +91,7 @@ const AppointmentPage = props => {
                 <Grid item xs={12} md={6}>
                     <Typography className={classes.subheading}>Выберите время:</Typography>
                     <List>
-                        <Grid container xs={12}>
+                        <Grid container >
                         {
                                 availableAppointments.length > 0 ? availableAppointments.map(a =>
                                 <Grid item xs={6}>
@@ -99,7 +100,7 @@ const AppointmentPage = props => {
                                             variant={selectedTime === a.id ? "contained" : "outlined"}
                                             color={selectedTime === a.id ? "primary" : "default"}
                                             onClick={e => setSelectedTime(a.id)}>
-                                            {moment(a.startTime).format('hh:mm')}-{moment(a.endTime).format('hh:mm')}
+                                            {moment(a.startTime).format('HH:mm')}-{moment(a.endTime).format('HH:mm')}
                                             {/*{dateFormat(a.startTime, 'HH:MM')} - {dateFormat(a.endTime, 'HH:MM')}*/}
                                         </Button>
                                     </ListItem>
