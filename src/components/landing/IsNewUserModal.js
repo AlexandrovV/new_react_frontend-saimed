@@ -73,7 +73,7 @@ const IsNewUserModal = props => {
                     <Autocomplete
                         id="combo-box-demo"
                         options={pastAppointments}
-                        getOptionLabel={(option) => option.fullName}
+                        getOptionLabel={(option) => option.fullName + ' ('+option.iin+')'}
                         onChange={(event, newValue) => {
                             setValue(newValue);
                         }}

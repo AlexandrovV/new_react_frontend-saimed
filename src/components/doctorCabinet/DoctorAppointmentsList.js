@@ -72,7 +72,7 @@ const DoctorAppointmentsList = props => {
                 return 'Свободно'
             case 'FINISHED':
                 return 'Завершено'
-            case 'TIMEOUT':
+            case 'PAST':
                 return 'Время прошло'
             default:
                 return status

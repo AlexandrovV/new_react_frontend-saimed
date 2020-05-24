@@ -28,7 +28,7 @@ const LoginModal = props => {
     const history = useHistory()
     const { showError } = useContext(AlertContext)
 
-    const [email, setEmail] = React.useState('');
+    const [login, setLogin] = React.useState('');
     const [password, setPassword] = React.useState('');
     
     const classes = useStyles()
@@ -38,7 +38,7 @@ const LoginModal = props => {
     const handleSubmit = async (e) => {
         try {
             e.preventDefault();
-            const token = await AuthService.login(email, password)
+            const token = await AuthService.login(login, password)
             localStorage.setItem('token', token)
             history.push('/cabinet')
         } catch (err) {
@@ -63,10 +63,10 @@ const LoginModal = props => {
             <DialogContent>
                 <TextField
                     margin="dense"
-                    label="E-mail"
+                    label="Логин"
                     type="text"
                     fullWidth
-                    onChange={e => setEmail(e.target.value)}
+                    onChange={e => setLogin(e.target.value)}
                 />
                 <TextField
                     margin="dense"

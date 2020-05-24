@@ -14,6 +14,7 @@ import MomentUtils from '@date-io/moment';
 import LuxonUtils from '@date-io/luxon';
 import AuthRoute from "./components/shared/AuthRoute";
 import ResetPasswordPage from "./components/resetPassword/ResetPasswordPage";
+import UserAppointments from "./components/doctorCabinet/users/UserAppointments";
 
 const App = props => {
   const [alertOpen, setAlertOpen] = useState(false)
@@ -47,6 +48,7 @@ const App = props => {
             <Route path="/admin">
               <DoctorCabinet />
             </Route>
+
             <Route path="/LandingMedic">
               <LandingMedic />
             </Route>

@@ -9,19 +9,30 @@ import AuthService from '../../service/AuthService'
 import { useHistory } from "react-router-dom"
 import Alert from '@material-ui/lab/Alert';
 import { AlertContext } from '../../context/AlertContext'
-
+import MaskedInput from 'react-text-mask'
 const useStyles = makeStyles({
     dialogTitle: {
         textAlign: 'center'
     }
 })
+const TextMaskCustom = (props) => {
+    const { inputRef, ...other } = props;
 
+    return (
+        <MaskedInput
+            {...other}
+            ref={inputRef}
+            mask={'(XXX) XXX-XX-XX'}
+            showMask
+        />
+    );
+}
 const RegisterModal = props => {
     const history = useHistory()
     const { showError, showSuccess } = useContext(AlertContext)
 
     const { open, onClose } = props
-    const [email, setEmail] = React.useState('');
+    const [login, setLogin] = React.useState('');
     const [password, setPassword] = React.useState('');
 
     const [passwordConfirm, setPasswordConfirm] = React.useState('');
@@ -30,14 +41,14 @@ const RegisterModal = props => {
 
     const [phoneNumber, setPhoneNumber] = React.useState('');
     const [birthDate, setBirthDate] = React.useState(null);
-
+    const [iin,SetIin]=React.useState('');
 
     const classes = useStyles()
 
     const handleSubmit = async (e) => {
         try {
             e.preventDefault();
-            const token = await AuthService.register(email, password,passwordConfirm,fullName,phoneNumber,birthDate)
+            const token = await AuthService.register(login, password,passwordConfirm,fullName,phoneNumber,birthDate,iin)
             localStorage.setItem('token', token)
             history.push('/cabinet')
             showSuccess('Пользователь успешно зарегистрирован!')
@@ -53,10 +64,10 @@ const RegisterModal = props => {
             <DialogContent>
                 <TextField
                     margin="dense"
-                    label="E-mail"
+                    label="Login"
                     type="text"
                     fullWidth
-                    onChange={e => setEmail(e.target.value)}
+                    onChange={e => setLogin(e.target.value)}
                 />
 
                 <TextField
@@ -75,6 +86,13 @@ const RegisterModal = props => {
                 />
                 <TextField
                     margin="dense"
+                    label="ИИН"
+                    fullWidth
+                    maxlength={12}
+                    onChange={e => SetIin(e.target.value)}
+                />
+                <TextField
+                    margin="dense"
                     label="Полное имя"
                     fullWidth
                     onChange={e => setFullName(e.target.value)}
@@ -84,8 +102,12 @@ const RegisterModal = props => {
                     label="Номер телефона"
                     fullWidth
                     type="tel"
+                    maxlength={10}
+                    minlength ={10}
                     onChange={e => setPhoneNumber(e.target.value)}
-                />
+                >
+
+                </TextField>
                 <TextField
                     id="standard-full-width"
                     label="Дата рождения"

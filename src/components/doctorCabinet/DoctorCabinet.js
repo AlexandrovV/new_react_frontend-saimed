@@ -8,6 +8,7 @@ import DoctorCabinetLoginPage from './DoctorCabinetLoginPage'
 import AuthRoute from '../shared/AuthRoute'
 import MkbTable from "./mkb/MkbTable";
 import UsersTable from "./users/UsersTable";
+import UserAppointments from "./users/UserAppointments";
 
 const useStyles = makeStyles(theme => ({
     background: {
@@ -38,6 +39,10 @@ const DoctorCabinet = props => {
             <AuthRoute exact path='/admin' role="ROLE_ADMIN" redirectUrl='/admin/login' >
                 <DoctorCabinetAppBar />
                 <DoctorAppointmentsList />
+            </AuthRoute>
+            <AuthRoute exact path='/admin/user_appointments/:userId' role="ROLE_ADMIN" redirectUrl='/admin/login' >
+                <DoctorCabinetAppBar />
+                <UserAppointments />
             </AuthRoute>
         </div>
     )

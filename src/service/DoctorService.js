@@ -7,6 +7,7 @@ const CANCEL_APPOINTMENT_URL = SERVER_URL + '/api/doctor/cancelAppointment'
 const APPOINTMENT_DETAILS_URL = SERVER_URL + '/api/doctor/appointmentDetails'
 const ADD_MEDICAL_REPORT_URL = SERVER_URL + '/api/doctor/addMedicalReport'
 const GET_APPOINTMENTS_BY_DATE_URL = SERVER_URL + '/api/doctor/appointmentsByDate'
+const GET_APPOINTMENTS_BY_USER = SERVER_URL + '/api/doctor/appointmentsByUser'
 const GET_MEDICAL_REPORT_URL = SERVER_URL + '/api/doctor/getMedicalReport'
 const GET_USERS_URL =SERVER_URL + '/api/doctor/getUsers'
 const DOWNLOAD_MEDICAL_REPORT_URL = SERVER_URL + '/api/patient/downloadMedicalReport/'
@@ -100,7 +101,35 @@ export default class DoctorService {
             }
         })
     }
+    static async getAppointmentsByUser(user_id){
+        return new Promise(async (resolve, reject) => {
+            try {
+                const token = localStorage.getItem('token')
+                const response = await fetch(GET_APPOINTMENTS_BY_USER, {
+                    method: 'post',
+                    body: JSON.stringify({userId: user_id}),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                    }
+                })
+                const data = await response.json()
+                console.log(data)
 
+                if (data.error != null && response.status === 401) {
+                    localStorage.removeItem('token')
+                    reject(data.error.message)
+                } else if (data.error != null) {
+                    reject(data.error.message)
+                } else {
+                    resolve({patientFullName:data.data.patientFullName,appointments:data.data.appointments})
+                }
+            } catch (err) {
+                console.log(err)
+                reject(err.message)
+            }
+        })
+    }
     static async GetUsers(){
         return new Promise(async (resolve, reject) => {
             try {

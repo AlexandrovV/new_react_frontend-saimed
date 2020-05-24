@@ -5,11 +5,13 @@ import CreateUserModal from "./CreateUserModal";
 import {AlertContext} from "../../../context/AlertContext";
 import DoctorService from "../../../service/DoctorService";
 import dateFormat from 'dateformat'
+import { useHistory } from "react-router-dom"
 
 const UsersTable = props => {
     const [users, setUsers] = useState([])
 
     const [createModalOpen, setCreateModalOpen] = useState(false)
+    const history = useHistory()
 
     const openCreateModal = () => setCreateModalOpen(true)
     const closeCreateModal = () => setCreateModalOpen(false)
@@ -49,21 +51,29 @@ const UsersTable = props => {
             showError(err)
         }
     }
+    const PushToAppointments = async (id) => {
+        try {
+            history.push('/admin/user_appointments/'+id)
+
+        } catch (err) {
+            showError(err)
+        }
+    }
 
     return (
         <Container>
             <MaterialTable
                 title="Пользователи SAIMED"
                 columns={[
-                    { title: "E-mail", field: "email", searchable: true },
-                    { title: "Ф.И.О.", field: "fullName" },
-                    { title: "Номер телефона", field: "phoneNumber" },
-                    { title: "Дата рождения", field: "birthDate", 
+                    { title: "Ф.И.О.", field: "fullName",searchable:true },
+                    { title: "Номер телефона", field: "phoneNumber",searchable:true },
+                    {title:"ИИН",field:"iin",searchable:true},
+                    { title: "Дата рождения", field: "birthDate",
                     render:data=>
                     moment(data.birthDate).format("L")
                     //  data => dateFormat(data.birthDate, 'dd.mm.yyyy') 
                     },
-                    { title: "Роль", field: "role" },
+                    { title: "E-mail", field: "email", searchable: true },
                 ]}
                 data={users}
                 actions={[
@@ -73,8 +83,14 @@ const UsersTable = props => {
                         onClick: (event, rowData) => blockUser(dataRow.id),
                         hidden: dataRow.role === 'BLOCKED'
                     }),
+                    dataRow => (  {
+                        icon: 'pageview',
+                        tooltip: 'Показать посещения',
+                        isFreeAction: true,
+                        onClick: () => PushToAppointments(dataRow.id)
+                    }),
                     dataRow => ({
-                        icon: 'done',
+                        icon: 'add',
                         tooltip: 'Разблокировать пользователя',
                         onClick: (event, rowData) => unblockUser(dataRow.id),
                         hidden: dataRow.role !== 'BLOCKED'
@@ -84,7 +100,8 @@ const UsersTable = props => {
                         tooltip: 'Добавить пользователя',
                         isFreeAction: true,
                         onClick: () => openCreateModal()
-                    }
+                    },
+
                 ]}
                 options={{
                     actionsColumnIndex: -1,

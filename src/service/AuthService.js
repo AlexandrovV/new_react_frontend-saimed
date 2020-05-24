@@ -6,12 +6,12 @@ const CONFIRM_RESET_URL = SERVER_URL + '/api/auth/confirm-reset'
 const RESET_PASSWORD_URL = SERVER_URL + '/api/auth/reset-password'
 
 export default class AuthService {
-    static async login(email, password) {
+    static async login(login, password) {
         return new Promise(async (resolve, reject) => {
             try {
                 const response = await fetch(LOGIN_URL, {
                     method: 'post', 
-                    body: JSON.stringify({ email, password }),
+                    body: JSON.stringify({ login:login, password:password }),
                     headers: {
                         'Content-Type': 'application/json'
                     }
@@ -29,12 +29,12 @@ export default class AuthService {
         })
     }
 
-    static async register(email, password,passwordConfirm,fullName,phoneNumber,birthDate) {
+    static async register(email, password,passwordConfirm,fullName,phoneNumber,birthDate,iin) {
         return new Promise(async (resolve, reject) => {
             try {
                 const response = await fetch(REGISTER_URL, {
                     method: 'post', 
-                    body: JSON.stringify({ email, password,passwordConfirm,fullName,phoneNumber,birthDate }),
+                    body: JSON.stringify({ email, password,passwordConfirm,fullName,phoneNumber,birthDate,iin }),
                     headers: {
                         'Content-Type': 'application/json'
                     }
