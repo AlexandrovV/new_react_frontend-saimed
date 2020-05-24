@@ -30,7 +30,7 @@ const ResetPasswordPage = props => {
     const location = useLocation()
     const {showSuccess, showError} = useContext(AlertContext)
 
-    const [email, setEmail] = useState('someemail@email.com');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
 

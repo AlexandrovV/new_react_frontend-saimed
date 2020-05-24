@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom'
 import { AlertContext } from '../../context/AlertContext'
 import AuthService from '../../service/AuthService'
 import { makeStyles } from '@material-ui/styles'
+import InputMask from "react-input-mask";
 
 const useStyles = makeStyles({
     container: {
@@ -20,13 +21,13 @@ const DoctorCabinetLoginPage = () => {
     const history = useHistory()
     const { showError } = useContext(AlertContext)
 
-    const [email, setEmail] = useState('');
+    const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
 
     const handleSubmit = async (e) => {
         try {
             e.preventDefault()
-            const token = await AuthService.login(email, password)
+            const token = await AuthService.login(login, password)
             localStorage.setItem('token', token)
             history.push('/admin')
         } catch (err) {
@@ -44,13 +45,17 @@ const DoctorCabinetLoginPage = () => {
                             <Typography gutterBottom variant="h5" component="h2" className={classes.textCenter}>
                                 Вход
                             </Typography>
-                                <TextField
-                                    margin="dense"
-                                    label="E-mail"
-                                    type="text"
-                                    fullWidth
-                                    onChange={e => setEmail(e.target.value)}
-                                />
+                                <InputMask mask="+7 (999) 999-99-99" maskChar=" " onChange={e => setLogin(e.target.value)}>
+                                    { (inputProps) =>
+                                        <TextField
+                                            {...inputProps}
+                                            margin="dense"
+                                            label="Номер телефона"
+                                            type="text"
+                                            fullWidth
+                                        />
+                                    }
+                                </InputMask>
                                 <TextField
                                     margin="dense"
                                     label="Пароль"

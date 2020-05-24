@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/styles'
 import AuthService from '../../service/AuthService'
 import { useHistory } from "react-router-dom"
 import { AlertContext } from '../../context/AlertContext'
+import InputMask from "react-input-mask";
 
 const useStyles = makeStyles({
     dialogTitle: {
@@ -61,13 +62,17 @@ const LoginModal = props => {
             <DialogTitle id="form-dialog-title" className={classes.dialogTitle}>Войти в кабинет</DialogTitle>
             <form onSubmit={handleSubmit}>
             <DialogContent>
-                <TextField
-                    margin="dense"
-                    label="Логин"
-                    type="text"
-                    fullWidth
-                    onChange={e => setLogin(e.target.value)}
-                />
+                <InputMask mask="+7 (999) 999-99-99" maskChar=" " onChange={e => setLogin(e.target.value)}>
+                    { (inputProps) =>
+                        <TextField
+                            {...inputProps}
+                            margin="dense"
+                            label="Номер телефона"
+                            type="text"
+                            fullWidth
+                        />
+                    }
+                </InputMask>
                 <TextField
                     margin="dense"
                     label="Пароль"

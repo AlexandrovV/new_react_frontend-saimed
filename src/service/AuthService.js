@@ -11,7 +11,7 @@ export default class AuthService {
             try {
                 const response = await fetch(LOGIN_URL, {
                     method: 'post', 
-                    body: JSON.stringify({ login:login, password:password }),
+                    body: JSON.stringify({ login, password }),
                     headers: {
                         'Content-Type': 'application/json'
                     }
