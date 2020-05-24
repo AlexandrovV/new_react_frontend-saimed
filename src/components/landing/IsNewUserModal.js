@@ -81,11 +81,11 @@ const IsNewUserModal = props => {
                     />
             </DialogContent>
             <DialogActions>
-                <Button onClick={makeAppointment} variant="contained" color="primary" >
-                    Записать
-                </Button>
                 <Button  onClick={openRegistration} variant="contained" color="primary">
                     Создать пользователя
+                </Button>
+                <Button onClick={makeAppointment} variant="contained" color="primary" >
+                    Записать
                 </Button>
             </DialogActions>
             <RegisterNewUser open={registerModalOpen} 

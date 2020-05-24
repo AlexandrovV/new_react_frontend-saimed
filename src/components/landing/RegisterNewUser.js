@@ -9,6 +9,7 @@ import AuthService from '../../service/AuthService'
 import { useHistory } from "react-router-dom"
 import Alert from '@material-ui/lab/Alert';
 import { AlertContext } from '../../context/AlertContext'
+import InputMask from "react-input-mask";
 
 const useStyles = makeStyles({
     dialogTitle: {
@@ -30,6 +31,7 @@ const RegisterNewUser = props => {
 
     const [phoneNumber, setPhoneNumber] = React.useState('');
     const [birthDate, setBirthDate] = React.useState(null);
+    const [iin,setIin]=React.useState('');
 
 
     const classes = useStyles()
@@ -37,7 +39,7 @@ const RegisterNewUser = props => {
     const handleSubmit = async (e) => {
         try {
             e.preventDefault();
-            const token = await AuthService.register(email, password,passwordConfirm,fullName,phoneNumber,birthDate)
+            const token = await AuthService.register(email, password,passwordConfirm,fullName,phoneNumber,birthDate, iin)
             showSuccess('Пользователь успешно зарегистрирован!')
             fetchData()
             onClose()
@@ -51,14 +53,17 @@ const RegisterNewUser = props => {
             <DialogTitle id="form-dialog-title" className={classes.dialogTitle}>Регистрация</DialogTitle>
             <form onSubmit={handleSubmit}>
             <DialogContent>
-                <TextField
-                    margin="dense"
-                    label="E-mail"
-                    type="text"
-                    fullWidth
-                    onChange={e => setEmail(e.target.value)}
-                />
-
+                <InputMask mask="+7 (999) 999-99-99" maskChar=" " onChange={e => setPhoneNumber(e.target.value)}>
+                    { (inputProps) =>
+                        <TextField
+                            {...inputProps}
+                            margin="dense"
+                            label="Номер телефона"
+                            type="text"
+                            fullWidth
+                        />
+                    }
+                </InputMask>
                 <TextField
                     margin="dense"
                     label="Пароль"
@@ -75,16 +80,16 @@ const RegisterNewUser = props => {
                 />
                 <TextField
                     margin="dense"
-                    label="Полное имя"
+                    label="ИИН"
                     fullWidth
-                    onChange={e => setFullName(e.target.value)}
+                    maxlength={12}
+                    onChange={e => setIin(e.target.value)}
                 />
                 <TextField
                     margin="dense"
-                    label="Номер телефона"
+                    label="Полное имя"
                     fullWidth
-                    type="tel"
-                    onChange={e => setPhoneNumber(e.target.value)}
+                    onChange={e => setFullName(e.target.value)}
                 />
                 <TextField
                     id="standard-full-width"
@@ -96,6 +101,13 @@ const RegisterNewUser = props => {
                     InputLabelProps={{
                         shrink: true,
                     }}
+                />
+                <TextField
+                    margin="dense"
+                    label="E-mail (необязательно)"
+                    type="text"
+                    fullWidth
+                    onChange={e => setEmail(e.target.value)}
                 />
             </DialogContent>
             <DialogActions>

@@ -103,7 +103,7 @@ const RegisterModal = props => {
                 />
                 <TextField
                     margin="dense"
-                    label="E-mail"
+                    label="E-mail (необязательно)"
                     type="text"
                     fullWidth
                     onChange={e => setEmail(e.target.value)}
