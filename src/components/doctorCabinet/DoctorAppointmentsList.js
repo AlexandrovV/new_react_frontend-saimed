@@ -152,7 +152,6 @@ const DoctorAppointmentsList = props => {
                                 variant="static"
                                 orientation="portrait"
                                 openTo="date"
-                                disablePast="true"
                                 onChange={handleDateChange}
                     />
                 </Grid>
@@ -219,8 +218,8 @@ const DoctorAppointmentsList = props => {
                         options={{
                             actionsColumnIndex: -1,
                             padding: "dense",
-                            pageSizeOptions: [10, 15, 20],
-                            pageSize: 15
+                            pageSizeOptions: [10, 15, 16, 20],
+                            pageSize: 16
                         }}
                     />
                     <SaveMedicalReportModal
